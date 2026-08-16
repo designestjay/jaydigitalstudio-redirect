@@ -1,8 +1,6 @@
-# jaydigitalstudio.com redirect
+# jaydigitalstudio.com
 
-This static GitHub Pages site redirects `jaydigitalstudio.com` to
-[https://iamjaydesign.com/](https://iamjaydesign.com/) while preserving the
-requested path, query string, and fragment.
+Static GitHub Pages site for [jaydigitalstudio.com](https://jaydigitalstudio.com/).
 
-Both `index.html` and `404.html` contain the redirect so direct requests to
-nested paths are handled. The custom domain is declared in `CNAME`.
+The custom domain is declared in `CNAME`. GitHub Pages deploys this repository
+from the `main` branch root.

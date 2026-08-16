@@ -1,25 +1,679 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="robots" content="noindex">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Redirecting…</title>
-  <link rel="canonical" href="https://iamjaydesign.com/">
-  <script>
-    (function () {
-      var target = new URL(
-        window.location.pathname + window.location.search + window.location.hash,
-        "https://iamjaydesign.com"
-      );
-      window.location.replace(target.href);
-    }());
-  </script>
-  <noscript>
-    <meta http-equiv="refresh" content="0; url=https://iamjaydesign.com/">
-  </noscript>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
 </head>
 <body>
-  <p>Redirecting to <a href="https://iamjaydesign.com/">iamjaydesign.com</a>…</p>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jay Digital Studio — Creative studio, Göteborg</title>
+<meta name="description" content="Jay Digital Studio is a creative studio in Göteborg specializing in art direction, UI/UX, motion, real-time 3D, and AR/VR experiences.">
+<link rel="canonical" href="https://jaydigitalstudio.com/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<style>
+  html, body { overflow-x:hidden; }
+  body { margin:0; background:#f2f2f0; color:#111111; font-family:Onest,system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  a { color:inherit; text-decoration:none; }
+  a:hover { color:inherit; }
+  ::selection { background:#c8ff36; color:#111111; }
+  :focus-visible { outline:2px solid #c8ff36; outline-offset:3px; }
+  input, textarea, button { font:inherit; }
+  .jds-hero > :not(.jds-hero-media):not(.jds-hero-overlay) { position:relative; z-index:2; }
+  @keyframes jds-marq { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } *, *::before, *::after { animation:none !important; transition:none !important; } }
+</style>
+</helmet>
+<div style="background:#f2f2f0;color:#111111;font-family:Onest,system-ui,sans-serif">
+
+  <sc-if value="{{ showLoader }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:200;background:#171717;color:#ffffff;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(20px,3vw,44px);opacity:{{ loaderOpacity }};transition:opacity 600ms ease;pointer-events:none">
+      <p style="margin:0;font-family:'JetBrains Mono',monospace;font-size:12px;color:#888888">Jay Digital Studio AB — Göteborg</p>
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap">
+        <p style="margin:0;font-size:clamp(40px,8vw,110px);letter-spacing:-0.08em;line-height:0.85;font-weight:500">jay<span style="font-size:0.3em;vertical-align:top;margin-left:0.08em">®</span></p>
+        <p style="margin:0;font-family:'JetBrains Mono',monospace;font-size:clamp(28px,4vw,56px);letter-spacing:-0.04em">{{ progressLabel }}</p>
+      </div>
+      <div style="height:2px;background:#333333;width:100%;overflow:hidden">
+        <div style="height:100%;background:#f2f2f0;width:{{ progressWidth }};transition:width 120ms linear"></div>
+      </div>
+    </div>
+  </sc-if>
+
+  <header style="position:sticky;top:0;z-index:120;display:flex;align-items:center;justify-content:space-between;gap:16px;height:74px;padding:0 clamp(14px,2.4vw,38px);background:rgba(242,242,240,0.88);backdrop-filter:blur(14px)">
+    <a href="#top" onClick="{{ goHome }}" style="font-weight:700;font-size:18px;letter-spacing:-0.03em">jay digital studio<sup style="font-size:9px">®</sup></a>
+    <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+      <nav aria-label="Main" style="display:flex;align-items:center;gap:clamp(14px,2.6vw,38px);font-weight:600;font-size:14px">
+        <a href="#work" style="transition:opacity 200ms" style-hover="opacity:0.45">Work <sup style="font-size:9px;margin-left:3px">06</sup></a>
+        <a href="#studio" style="transition:opacity 200ms" style-hover="opacity:0.45">Studio</a>
+        <a href="#services" style="transition:opacity 200ms" style-hover="opacity:0.45">Services</a>
+        <a href="#journal" style="transition:opacity 200ms" style-hover="opacity:0.45">Journal</a>
+        <a href="#contact" style="background:#111111;color:#f2f2f0;border-radius:999px;padding:11px 20px;font-size:13px;transition:background 240ms,color 240ms" style-hover="background:#c8ff36;color:#111111">Let's talk ↗</a>
+      </nav>
+    </sc-if>
+    <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+      <button type="button" onClick="{{ toggleMenu }}" aria-label="Toggle menu" style="border:1px solid #aaaaaa;background:transparent;border-radius:999px;min-height:44px;padding:0 18px;font-size:13px;font-weight:600;cursor:pointer;color:#111111">{{ menuLabel }}</button>
+    </sc-if>
+  </header>
+
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <nav aria-label="Main" style="position:sticky;top:74px;z-index:89;margin:0 8px;border-radius:20px;background:#171717;color:#ffffff;padding:22px;display:flex;flex-direction:column;gap:4px;font-weight:600;font-size:18px">
+      <a href="#work" onClick="{{ closeMenu }}" style="padding:12px 0;min-height:44px">Work</a>
+      <a href="#studio" onClick="{{ closeMenu }}" style="padding:12px 0;min-height:44px">Studio</a>
+      <a href="#services" onClick="{{ closeMenu }}" style="padding:12px 0;min-height:44px">Services</a>
+      <a href="#journal" onClick="{{ closeMenu }}" style="padding:12px 0;min-height:44px">Journal</a>
+      <a href="#contact" onClick="{{ closeMenu }}" style="margin-top:10px;background:#f2f2f0;color:#111111;border-radius:999px;padding:14px 20px;text-align:center;min-height:44px">Let's talk ↗</a>
+    </nav>
+  </sc-if>
+
+  <sc-if value="{{ showCase }}" hint-placeholder-val="{{ false }}">
+    <main style="padding:clamp(18px,2.4vw,38px) clamp(14px,2.4vw,38px) 0">
+      <a href="#work" onClick="{{ goHome }}" style="display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:12px;border:1px solid #aaaaaa;border-radius:999px;padding:10px 18px;transition:background 220ms,color 220ms" style-hover="background:#111111;color:#f2f2f0">← All work</a>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(26px,4vw,70px);margin:clamp(28px,4vw,60px) 0 clamp(26px,3.5vw,48px)">
+        <div>
+          <p style="margin:0 0 16px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#666666">{{ caseNumber }} — {{ caseItem.year }}</p>
+          <h1 style="margin:0 0 24px;font-size:clamp(48px,8vw,130px);line-height:0.85;font-weight:500;letter-spacing:-0.075em">{{ caseItem.title }}.</h1>
+          <p style="margin:0;max-width:52ch;font-size:clamp(17px,1.7vw,23px);line-height:1.35;text-wrap:pretty">{{ caseItem.intro }}</p>
+          <a href="{{ caseItem.link }}" target="_blank" rel="noopener" style="display:inline-flex;gap:40px;align-items:center;margin-top:32px;background:#111111;color:#f2f2f0;border-radius:999px;padding:14px 18px;font-weight:600;font-size:14px;transition:background 240ms,color 240ms" style-hover="background:#c8ff36;color:#111111">View project <span>↗</span></a>
+        </div>
+        <div style="align-self:start;border-radius:24px;background:#d7d7d1;padding:clamp(20px,2.6vw,32px)">
+          <div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-top:1px solid #aaaaaa"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#555555">Client</span><span style="font-size:14px;font-weight:600;text-align:right">{{ caseItem.client }}</span></div>
+          <div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-top:1px solid #aaaaaa"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#555555">Category</span><span style="font-size:14px;font-weight:600;text-align:right">{{ caseItem.category }}</span></div>
+          <div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-top:1px solid #aaaaaa"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#555555">Services</span><span style="font-size:14px;font-weight:600;text-align:right;max-width:60%">{{ caseItem.services }}</span></div>
+          <div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-top:1px solid #aaaaaa"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#555555">Year</span><span style="font-size:14px;font-weight:600;text-align:right">{{ caseItem.year }}</span></div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(14px,1.8vw,24px)">
+        <sc-for list="{{ caseBlocks }}" as="block" hint-placeholder-count="4">
+          <div>
+            <sc-if value="{{ block.wide }}" hint-placeholder-val="{{ true }}">
+              <div data-reveal="" style="border-radius:22px;overflow:hidden;background:#d7d7d1">
+                <img src="{{ block.src }}" alt="{{ block.alt }}" style="width:100%;height:auto;display:block">
+              </div>
+            </sc-if>
+            <sc-if value="{{ block.pair }}" hint-placeholder-val="{{ false }}">
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(14px,1.8vw,24px)">
+                <sc-for list="{{ block.shots }}" as="shot" hint-placeholder-count="2">
+                  <div data-reveal="" style="border-radius:22px;overflow:hidden;background:#d7d7d1;aspect-ratio:{{ block.ratio }}">
+                    <img src="{{ shot.src }}" alt="{{ shot.alt }}" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block">
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ block.video }}" hint-placeholder-val="{{ false }}">
+              <div data-reveal="" style="border-radius:22px;overflow:hidden;background:#171717">
+                <video src="{{ block.src }}" autoPlay="{{ true }}" loop="{{ true }}" muted="{{ true }}" playsInline="{{ true }}" controls="{{ true }}" style="width:100%;height:auto;display:block"></video>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin:clamp(36px,5vw,70px) 0 clamp(60px,8vw,110px);padding-top:26px;border-top:1px solid #aaaaaa">
+        <a href="#work" onClick="{{ prevCase }}" style="display:flex;flex-direction:column;gap:6px" style-hover="opacity:0.5">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#555555">Previous</span>
+          <span style="font-size:clamp(22px,3.4vw,46px);font-weight:500;letter-spacing:-0.06em">← {{ prevTitle }}</span>
+        </a>
+        <a href="#work" onClick="{{ nextCase }}" style="display:flex;flex-direction:column;gap:6px;text-align:right" style-hover="opacity:0.5">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#555555">Next</span>
+          <span style="font-size:clamp(22px,3.4vw,46px);font-weight:500;letter-spacing:-0.06em">{{ nextTitle }} →</span>
+        </a>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ showHome }}" hint-placeholder-val="{{ true }}">
+  <main>
+
+    <section id="top" class="jds-hero" data-screen-label="Hero" style="position:{{ heroPosition }};top:0;z-index:{{ heroZ }};isolation:isolate;overflow:hidden;margin:0 6px;border-radius:28px;min-height:min(880px,calc(100svh - 88px));background:#171717;color:#ffffff;padding:clamp(30px,5vw,70px) clamp(18px,2.4vw,38px) clamp(200px,22vw,240px);display:flex;flex-direction:column">
+      <video class="jds-hero-media" src="video/work-reel-2024.mp4" poster="images/work/wov.png" autoPlay="{{ true }}" loop="{{ true }}" muted="{{ true }}" playsInline="{{ true }}" preload="auto" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none;filter:grayscale(0.35) brightness(0.7)"></video>
+      <div class="jds-hero-overlay" style="position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,0.28),rgba(0,0,0,0.72))"><h1 style="position: absolute; left: 32px; max-width: 640px; margin: 0; font-size: clamp(21px,2.7vw,40px); line-height: 1.12; letter-spacing: -0.045em; font-weight: 500; text-wrap: pretty; top: 600px">Interfaces, motion and real-time worlds. Fifteen years of interaction design for global brands, shipped with their engineering teams.</h1></div>
+      <p style="margin:0;font-size:clamp(88px,16.5vw,262px);letter-spacing:-0.09em;line-height:0.76;font-weight:500">jay<span style="font-size:0.32em;vertical-align:top;letter-spacing:normal;margin-left:0.08em">®</span></p>
+      <p style="margin:6px 0 0 34%;font-size:clamp(30px,4.6vw,72px);font-weight:600;line-height:1;letter-spacing:-0.05em">digital studio</p>
+      <div style="position:absolute;right:clamp(18px,2.4vw,38px);top:clamp(120px,22%,240px);display:flex;flex-direction:column;gap:11px;font-size:clamp(12px,1.15vw,17px);font-weight:600;text-align:right">
+        <span>Art direction</span>
+        <span>UI/UX design</span>
+        <span>Motion &amp; real-time 3D</span>
+        <span>AR / VR experiences</span>
+      </div>
+
+    </section>
+
+    <div style="position:relative;z-index:1;background:#f2f2f0">
+
+    <div style="overflow:hidden;padding:22px 0;border-bottom:1px solid #cccccc">
+      <div style="display:flex;width:max-content;animation:jds-marq 42s linear infinite">
+        <div style="display:flex;align-items:center">
+          <span style="font-size:clamp(20px,2.5vw,36px);font-weight:500;letter-spacing:-0.05em;padding:0 26px">Volvo Cars</span><span style="width:7px;height:7px;border-radius:50%;background:#111111"></span>
+          <span style="font-size:clamp(20px,2.5vw,36px);font-weight:500;letter-spacing:-0.05em;padding:0 26px">Volvo Group</span><span style="width:7px;height:7px;border-radius:50%;background:#111111"></span>
+          <span style="font-size:clamp(20px,2.5vw,36px);font-weight:500;letter-spacing:-0.05em;padding:0 26px">Polestar</span><span style="width:7px;height:7px;border-radius:50%;background:#111111"></span>
+          <span style="font-size:clamp(20px,2.5vw,36px);font-weight:500;letter-spacing:-0.05em;padding:0 26px">Google</span><span style="width:7px;height:7px;border-radius:50%;background:#111111"></span>
+          <span style="font-size:clamp(20px,2.5vw,36px);font-weight:500;letter-spacing:-0.05em;padding:0 26px">Electrolux</span><span style="width:7px;height:7px;border-radius:50%;background:#111111"></span>
+          <span style="font-size:clamp(20px,2.5vw,36px);font-weight:500;letter-spacing:-0.05em;padding:0 26px">Geely Motors</span><span style="width:7px;height:7px;border-radius:50%;background:#111111"></span>
+          <span style="font-size:clamp(20px,2.5vw,36px);font-weight:500;letter-spacing:-0.05em;padding:0 26px">Hyundai</span><span style="width:7px;height:7px;border-radius:50%;background:#111111"></span>
+          <span style="font-size:clamp(20px,2.5vw,36px);font-weight:500;letter-spacing:-0.05em;padding:0 26px">Faurecia</span><span style="width:7px;height:7px;border-radius:50%;background:#111111"></span>
+        </div>
+        <div style="display:flex;align-items:center" aria-hidden="true">
+          <span style="font-size:clamp(20px,2.5vw,36px);font-weight:500;letter-spacing:-0.05em;padding:0 26px">Volvo Cars</span><span style="width:7px;height:7px;border-radius:50%;background:#111111"></span>
+          <span style="font-size:clamp(20px,2.5vw,36px);font-weight:500;letter-spacing:-0.05em;padding:0 26px">Volvo Group</span><span style="width:7px;height:7px;border-radius:50%;background:#111111"></span>
+          <span style="font-size:clamp(20px,2.5vw,36px);font-weight:500;letter-spacing:-0.05em;padding:0 26px">Polestar</span><span style="width:7px;height:7px;border-radius:50%;background:#111111"></span>
+          <span style="font-size:clamp(20px,2.5vw,36px);font-weight:500;letter-spacing:-0.05em;padding:0 26px">Google</span><span style="width:7px;height:7px;border-radius:50%;background:#111111"></span>
+          <span style="font-size:clamp(20px,2.5vw,36px);font-weight:500;letter-spacing:-0.05em;padding:0 26px">Electrolux</span><span style="width:7px;height:7px;border-radius:50%;background:#111111"></span>
+          <span style="font-size:clamp(20px,2.5vw,36px);font-weight:500;letter-spacing:-0.05em;padding:0 26px">Geely Motors</span><span style="width:7px;height:7px;border-radius:50%;background:#111111"></span>
+          <span style="font-size:clamp(20px,2.5vw,36px);font-weight:500;letter-spacing:-0.05em;padding:0 26px">Hyundai</span><span style="width:7px;height:7px;border-radius:50%;background:#111111"></span>
+          <span style="font-size:clamp(20px,2.5vw,36px);font-weight:500;letter-spacing:-0.05em;padding:0 26px">Faurecia</span><span style="width:7px;height:7px;border-radius:50%;background:#111111"></span>
+        </div>
+      </div>
+    </div>
+
+    <section id="work" data-screen-label="Work" style="padding:clamp(80px,11vw,170px) clamp(14px,2.4vw,38px)">
+      <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:16px;border-top:1px solid #aaaaaa;padding-top:13px;margin-bottom:clamp(46px,7vw,100px);font-family:'JetBrains Mono',monospace;font-size:12px">
+        <span>Selected work</span><span style="text-align:center">(2020—25©)</span><span>(06)</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:36px;align-items:end;margin-bottom:60px">
+        <h2 style="margin:0;font-size:clamp(62px,10vw,152px);font-weight:500;letter-spacing:-0.08em;line-height:0.85">Work.</h2>
+        <p style="margin:0;max-width:580px;font-size:clamp(17px,1.7vw,25px);line-height:1.25;text-wrap:pretty">Interactive media, automotive HMI, augmented reality and product design — delivered with global brands and their engineering teams.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:50px 14px;max-width:1800px">
+        <sc-for list="{{ projects }}" as="p" hint-placeholder-count="6">
+          <a href="#work" onClick="{{ p.open }}" data-reveal="" style="display:block;cursor:pointer;transition:transform 600ms cubic-bezier(0.16,1,0.3,1)" style-hover="transform:translateY(-8px)">
+            <div style="position:relative;overflow:hidden;border-radius:22px;height:min(46vw,600px);background:#d7d7d1">
+              <img src="{{ p.thumb }}" alt="{{ p.title }}" style="position:absolute;left:0;top:-6%;width:100%;height:112%;object-fit:cover;object-position:center;display:block;transition:transform 900ms cubic-bezier(0.16,1,0.3,1)" style-hover="transform:scale(1.05)">
+              <span style="position:absolute;left:18px;top:18px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#ffffff;background:rgba(0,0,0,0.4);backdrop-filter:blur(6px);border-radius:999px;padding:5px 11px">{{ p.num }}</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr auto auto;gap:20px;align-items:baseline;margin-top:14px">
+              <strong style="font-size:clamp(24px,2.4vw,42px);letter-spacing:-0.055em;font-weight:500;text-wrap:balance">{{ p.title }}.</strong>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#555555">{{ p.category }}</span>
+              <em style="font-family:'JetBrains Mono',monospace;font-size:12px;font-style:normal;color:#555555">/ {{ p.year }}</em>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <section id="studio" data-screen-label="Studio" style="padding:0 clamp(14px,2.4vw,38px) clamp(80px,11vw,170px)">
+      <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:16px;border-top:1px solid #aaaaaa;padding-top:13px;margin-bottom:clamp(46px,7vw,100px);font-family:'JetBrains Mono',monospace;font-size:12px">
+        <span>The studio</span><span style="text-align:center">Göteborg, Sweden</span><span>(01)</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(30px,5vw,70px);align-items:end">
+        <h2 style="margin:0;font-size:clamp(46px,7vw,112px);font-weight:500;letter-spacing:-0.075em;line-height:0.88;text-wrap:balance">A small senior team, close to the work.</h2>
+        <div style="display:flex;flex-direction:column;gap:24px;align-items:flex-start">
+          <p style="margin:0;font-size:19px;line-height:1.35;text-wrap:pretty">Jay Digital Studio AB works as an extension of in-house teams at OEMs, agencies and product companies — one team from concept through to the build, with specialists brought in when a project needs them.</p>
+          <a href="#contact" style="display:inline-flex;gap:40px;align-items:center;background:#111111;color:#f2f2f0;border-radius:999px;padding:14px 18px;font-weight:600;font-size:14px;transition:background 240ms,color 240ms" style-hover="background:#c8ff36;color:#111111">Start a project <span>↗</span></a>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-top:clamp(50px,7vw,90px)">
+        <div data-reveal="" style="grid-column:span 2;min-height:300px;border-radius:24px;background:#171717;color:#ffffff;padding:30px;display:flex;align-items:flex-end">
+          <p style="margin:0;font-size:clamp(24px,3vw,45px);line-height:1.05;letter-spacing:-0.05em;text-wrap:pretty">Design that survives contact with engineering, hardware and deadlines. No theatre, no inflated promises.</p>
+        </div>
+        <div data-reveal="" style="min-height:300px;border-radius:24px;background:#dedeD9;padding:28px;display:grid;grid-template-columns:1fr auto;align-items:end;gap:12px">
+          <strong style="grid-column:1/-1;align-self:start;font-size:clamp(70px,8vw,120px);line-height:0.8;letter-spacing:-0.08em;font-weight:500"><span data-count="50">0</span><span style="font-size:0.4em">+</span></strong>
+          <h3 style="margin:0;font-size:18px;font-weight:600">Projects launched</h3>
+          <p style="margin:0;font-family:'JetBrains Mono',monospace;font-size:12px;color:#555555">01</p>
+        </div>
+        <div data-reveal="" style="min-height:300px;border-radius:24px;background:#171717;color:#ffffff;padding:28px;display:grid;grid-template-columns:1fr auto;align-items:end;gap:12px">
+          <strong style="grid-column:1/-1;align-self:start;font-size:clamp(70px,8vw,120px);line-height:0.8;letter-spacing:-0.08em;font-weight:500"><span data-count="15">0</span><span style="font-size:0.4em">+</span></strong>
+          <h3 style="margin:0;font-size:18px;font-weight:600">Years of experience</h3>
+          <p style="margin:0;font-family:'JetBrains Mono',monospace;font-size:12px;opacity:0.6">02</p>
+        </div>
+        <div data-reveal="" style="min-height:300px;border-radius:24px;background:#dedeD9;padding:28px;display:grid;grid-template-columns:1fr auto;align-items:end;gap:12px">
+          <strong style="grid-column:1/-1;align-self:start;font-size:clamp(70px,8vw,120px);line-height:0.8;letter-spacing:-0.08em;font-weight:500"><span data-count="11">0</span></strong>
+          <h3 style="margin:0;font-size:18px;font-weight:600">Global brands served</h3>
+          <p style="margin:0;font-family:'JetBrains Mono',monospace;font-size:12px;color:#555555">03</p>
+        </div>
+        <div data-reveal="" style="min-height:300px;border-radius:24px;background:#dedeD9;padding:28px;display:flex;flex-direction:column;justify-content:space-between;gap:20px">
+          <p style="margin:0;font-family:'JetBrains Mono',monospace;font-size:12px;color:#555555">04</p>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <p style="margin:0;font-size:22px;line-height:1.2;letter-spacing:-0.03em">Project or retainer. Typical start two to three weeks out.</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <a href="https://www.linkedin.com/in/designjay/" target="_blank" rel="noopener" style="border:1px solid #999999;border-radius:999px;padding:8px 14px;font-size:12px;transition:background 220ms,color 220ms" style-hover="background:#111111;color:#f2f2f0">LinkedIn ↗</a>
+              <a href="https://www.behance.net/iamjaydesign" target="_blank" rel="noopener" style="border:1px solid #999999;border-radius:999px;padding:8px 14px;font-size:12px;transition:background 220ms,color 220ms" style-hover="background:#111111;color:#f2f2f0">Behance ↗</a>
+              <a href="https://dribbble.com/Jay-Design" target="_blank" rel="noopener" style="border:1px solid #999999;border-radius:999px;padding:8px 14px;font-size:12px;transition:background 220ms,color 220ms" style-hover="background:#111111;color:#f2f2f0">Dribbble ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" data-screen-label="Services" style="background:#171717;color:#ffffff;padding:clamp(80px,11vw,170px) clamp(14px,2.4vw,38px)">
+      <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:16px;border-top:1px solid #555555;padding-top:13px;margin-bottom:clamp(46px,7vw,90px);font-family:'JetBrains Mono',monospace;font-size:12px">
+        <span>What we do</span><span style="text-align:center">Concept to shipped build</span><span>(05)</span>
+      </div>
+      <h2 style="margin:0 0 70px;font-size:clamp(62px,10vw,152px);font-weight:500;letter-spacing:-0.08em;line-height:0.85">Services.</h2>
+      <div style="display:flex;flex-direction:column">
+        <sc-for list="{{ services }}" as="s" hint-placeholder-count="5">
+          <article data-reveal="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:26px 30px;align-items:start;border-top:1px solid #474747;padding:26px 0 46px">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#bcbcbc">{{ s.num }}</div>
+            <h3 style="margin:0;font-size:clamp(30px,3.6vw,58px);letter-spacing:-0.06em;line-height:0.95;font-weight:500">{{ s.title }}</h3>
+            <p style="margin:0;max-width:400px;color:#bcbcbc;line-height:1.4;font-size:15px;text-wrap:pretty">{{ s.body }}</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start">
+              <sc-for list="{{ s.tags }}" as="tag" hint-placeholder-count="4">
+                <span style="border:1px solid #555555;border-radius:999px;padding:7px 12px;font-size:12px">{{ tag }}</span>
+              </sc-for>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+      <a href="#contact" style="display:inline-flex;gap:40px;align-items:center;margin-top:36px;background:#f2f2f0;color:#111111;border-radius:999px;padding:14px 18px;font-weight:600;font-size:14px;transition:background 240ms" style-hover="background:#c8ff36;color:#111111">Get started <span>↗</span></a>
+    </section>
+
+    <section data-screen-label="Process" style="padding:clamp(80px,11vw,170px) clamp(14px,2.4vw,38px)">
+      <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:16px;border-top:1px solid #aaaaaa;padding-top:13px;margin-bottom:clamp(46px,7vw,90px);font-family:'JetBrains Mono',monospace;font-size:12px">
+        <span>How we work</span><span style="text-align:center">Small team, full attention</span><span>(04)</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:36px;align-items:end;margin-bottom:60px">
+        <h2 style="margin:0;font-size:clamp(50px,8vw,124px);font-weight:500;letter-spacing:-0.08em;line-height:0.85">How the work moves.</h2>
+        <p style="margin:0;max-width:520px;font-size:clamp(17px,1.7vw,24px);line-height:1.25;text-wrap:pretty">Design, prototyping and real-time development happen together, so nothing is lost in handover to the engineering team.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:34px 12px;align-items:stretch">
+
+        <div data-reveal="" style="border-top:1px solid #999999;padding-top:12px;display:flex;flex-direction:column">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#555555">01</span>
+          <div style="aspect-ratio:1 / 1;width:100%;margin:40px 0 20px;border-radius:18px;background:#ffffff;display:flex;flex-direction:column;justify-content:center;gap:14px;padding:12% 14%">
+            <span data-pop style="height:10px;border-radius:99px;background:#dcdcd6;width:88%;display:block"></span>
+            <span data-pop style="height:10px;border-radius:99px;background:#dcdcd6;width:64%;display:block"></span>
+            <span data-pop style="height:10px;border-radius:99px;background:#111111;width:42%;display:block"></span>
+            <span data-pop style="height:10px;border-radius:99px;background:#dcdcd6;width:74%;display:block"></span>
+          </div>
+          <h3 style="margin:0;font-size:20px;max-width:230px;min-height:3em;font-weight:600;letter-spacing:-0.02em;line-height:1.25;text-wrap:pretty">Understand the constraint before designing</h3>
+        </div>
+
+        <div data-reveal="" style="border-top:1px solid #999999;padding-top:12px;display:flex;flex-direction:column">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#555555">02</span>
+          <div style="aspect-ratio:1 / 1;width:100%;margin:40px 0 20px;border-radius:18px;background:#ffffff;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:9px;padding:16%">
+            <span data-pop style="border:1.5px solid #dcdcd6;border-radius:4px;display:block"></span>
+            <span data-pop style="border:1.5px solid #dcdcd6;border-radius:4px;display:block"></span>
+            <span data-pop style="border:1.5px solid #dcdcd6;border-radius:4px;display:block"></span>
+            <span data-pop style="border:1.5px solid #dcdcd6;border-radius:4px;display:block"></span>
+            <span data-pop style="border:1.5px solid #111111;border-radius:4px;background:#111111;display:block"></span>
+            <span data-pop style="border:1.5px solid #dcdcd6;border-radius:4px;display:block"></span>
+            <span data-pop style="border:1.5px solid #dcdcd6;border-radius:4px;display:block"></span>
+            <span data-pop style="border:1.5px solid #dcdcd6;border-radius:4px;display:block"></span>
+            <span data-pop style="border:1.5px solid #dcdcd6;border-radius:4px;display:block"></span>
+          </div>
+          <h3 style="margin:0;font-size:20px;max-width:230px;min-height:3em;font-weight:600;letter-spacing:-0.02em;line-height:1.25;text-wrap:pretty">Shape a system around the brief</h3>
+        </div>
+
+        <div data-reveal="" style="border-top:1px solid #999999;padding-top:12px;display:flex;flex-direction:column">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#555555">03</span>
+          <div style="aspect-ratio:1 / 1;width:100%;margin:40px 0 20px;border-radius:18px;background:#ffffff;display:grid;place-items:center;padding:12%">
+            <div style="width:100%;aspect-ratio:1;display:grid;place-items:center;position:relative">
+              <span data-pop style="position:absolute;inset:0;border:1.5px solid #dcdcd6;border-radius:50%;display:block"></span>
+              <span data-pop style="position:absolute;inset:17%;border:1.5px solid #dcdcd6;border-radius:50%;display:block"></span>
+              <span data-pop style="position:absolute;inset:34%;border:1.5px solid #dcdcd6;border-radius:50%;display:block"></span>
+              <span data-pop style="position:absolute;inset:44%;background:#111111;border:1.5px solid #111111;border-radius:50%;display:block"></span>
+            </div>
+          </div>
+          <h3 style="margin:0;font-size:20px;max-width:230px;min-height:3em;font-weight:600;letter-spacing:-0.02em;line-height:1.25;text-wrap:pretty">Prototype in the real medium, early</h3>
+        </div>
+
+        <div data-reveal="" style="border-top:1px solid #999999;padding-top:12px;display:flex;flex-direction:column">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#555555">04</span>
+          <div style="aspect-ratio:1 / 1;width:100%;margin:40px 0 20px;border-radius:18px;background:#ffffff;display:flex;align-items:center;justify-content:center;gap:0;padding:16%">
+            <span data-pop style="width:26%;aspect-ratio:1;border:1.5px solid #dcdcd6;border-radius:50%;display:block;margin-right:-6%;background:#ffffff"></span>
+            <span data-pop style="width:26%;aspect-ratio:1;border:1.5px solid #dcdcd6;border-radius:50%;display:block;margin-right:-6%;background:#ffffff"></span>
+            <span data-pop style="width:26%;aspect-ratio:1;border:1.5px solid #dcdcd6;border-radius:50%;display:block;margin-right:-6%;background:#ffffff"></span>
+            <span data-pop style="width:26%;aspect-ratio:1;border:1.5px solid #111111;border-radius:50%;display:block;background:#111111"></span>
+          </div>
+          <h3 style="margin:0;font-size:20px;max-width:230px;min-height:3em;font-weight:600;letter-spacing:-0.02em;line-height:1.25;text-wrap:pretty">Ship with the engineering team</h3>
+        </div>
+
+      </div>
+    </section>
+
+    <section data-screen-label="Quote" style="background:#e4ecc8;padding:clamp(70px,10vw,150px) clamp(14px,2.4vw,38px)">
+      <p style="font-size:140px;line-height:0.5;margin:0">“</p>
+      <blockquote style="font-size:clamp(38px,6.4vw,102px);letter-spacing:-0.07em;line-height:0.92;margin:34px 0 60px;max-width:1300px;font-weight:500;text-wrap:balance">Design and engineering in the same room. That is why the exhibition shipped on time.</blockquote>
+      <div style="display:flex;gap:12px;align-items:center">
+        <p style="display:flex;flex-direction:column;margin:0"><strong style="font-weight:600">Exhibition team</strong><span style="font-size:12px">World of Volvo, Göteborg</span></p>
+      </div>
+      <div style="margin-top:80px;padding-top:25px;border-top:1px solid #111111;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px">
+        <div style="display:flex;flex-direction:column"><strong style="font-size:clamp(52px,7vw,100px);letter-spacing:-0.07em;font-weight:500">20K<span style="font-size:0.4em">+</span></strong><span style="font-size:13px">Social followers</span></div>
+        <div style="display:flex;flex-direction:column"><strong style="font-size:clamp(52px,7vw,100px);letter-spacing:-0.07em;font-weight:500">15yr</strong><span style="font-size:13px">Interaction design practice</span></div>
+        <div style="display:flex;flex-direction:column"><strong style="font-size:clamp(52px,7vw,100px);letter-spacing:-0.07em;font-weight:500">11</strong><span style="font-size:13px">Global brands collaborated with</span></div>
+      </div>
+    </section>
+
+    <section id="journal" data-screen-label="Journal" style="padding:clamp(80px,11vw,170px) clamp(14px,2.4vw,38px)">
+      <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:16px;border-top:1px solid #aaaaaa;padding-top:13px;margin-bottom:clamp(46px,7vw,90px);font-family:'JetBrains Mono',monospace;font-size:12px">
+        <span>Journal</span><span style="text-align:center">Notes &amp; meetups</span><span>(03)</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:36px;align-items:end;margin-bottom:56px">
+        <h2 style="margin:0;font-size:clamp(62px,10vw,152px);font-weight:500;letter-spacing:-0.08em;line-height:0.85">Journal.</h2>
+        <p style="margin:0;max-width:520px;font-size:clamp(17px,1.7vw,24px);line-height:1.25;text-wrap:pretty">Writing from the studio, and recaps from the design meetups we host in Göteborg.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px">
+        <sc-for list="{{ posts }}" as="post" hint-placeholder-count="3">
+          <article data-reveal="" style="display:flex;flex-direction:column">
+            <div style="border-radius:22px;overflow:hidden;aspect-ratio:16/11;background:#d7d7d1">
+              <img src="{{ post.image }}" alt="{{ post.title }}" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 900ms cubic-bezier(0.16,1,0.3,1)" style-hover="transform:scale(1.05)">
+            </div>
+            <p style="margin:16px 0 8px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#555555">{{ post.date }}</p>
+            <h3 style="margin:0 0 10px;font-size:23px;font-weight:500;letter-spacing:-0.04em;line-height:1.15;text-wrap:pretty">{{ post.title }}</h3>
+            <p style="margin:0;font-size:14px;line-height:1.5;color:#555555;text-wrap:pretty">{{ post.summary }}</p>
+          </article>
+        </sc-for>
+      </div>
+    </section>
+
+    <section data-screen-label="FAQ" style="padding:0 clamp(14px,2.4vw,38px) clamp(80px,11vw,170px)">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:36px;align-items:start;margin-bottom:60px">
+        <h2 style="margin:0;font-size:clamp(62px,10vw,152px);font-weight:500;letter-spacing:-0.08em;line-height:0.85">FAQ.</h2>
+        <p style="margin:0;max-width:520px;font-size:clamp(17px,1.7vw,24px);line-height:1.25;text-wrap:pretty">Useful answers before we begin. If your question is not here, send a note.</p>
+      </div>
+      <div style="display:flex;flex-direction:column">
+        <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="4">
+          <article style="border-top:1px solid #999999">
+            <button type="button" onClick="{{ f.toggle }}" style="width:100%;border:0;background:transparent;display:flex;justify-content:space-between;gap:20px;text-align:left;padding:25px 0;font-size:clamp(20px,2.2vw,32px);letter-spacing:-0.04em;cursor:pointer;color:#111111">
+              <span>{{ f.q }}</span><b style="font-weight:400">{{ f.sign }}</b>
+            </button>
+            <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:0;padding:0 0 28px;max-width:650px;line-height:1.5;color:#555555;font-size:16px;text-wrap:pretty">{{ f.a }}</p>
+            </sc-if>
+          </article>
+        </sc-for>
+        <div style="border-top:1px solid #999999"></div>
+      </div>
+    </section>
+
+    <section id="contact" data-screen-label="Contact" style="margin:0 6px;border-radius:28px;background:#171717;color:#ffffff;padding:clamp(50px,8vw,120px) clamp(18px,2.4vw,38px);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(40px,8vw,110px)">
+      <div>
+        <p style="margin:0;font-size:18px;color:#aaaaaa">Have a project in mind?</p>
+        <h2 style="margin:30px 0;font-size:clamp(70px,11vw,170px);font-weight:500;letter-spacing:-0.08em;line-height:0.82">Let's talk.</h2>
+        <p style="margin:0;max-width:520px;font-size:18px;line-height:1.4;text-wrap:pretty">Tell us what you are building, what is getting in the way, and where you want to go next. You get a reply within two working days.</p>
+        <a href="mailto:Support@jaydigitalstudio.com" style="display:inline-flex;gap:50px;margin-top:44px;padding-bottom:8px;border-bottom:1px solid #777777;font-size:16px" style-hover="color:#c8ff36">Support@jaydigitalstudio.com <span>↗</span></a>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:36px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#aaaaaa">
+          <span>Östanvindsgatan 7A, 417 17 Göteborg</span>
+          <span>Jay Digital Studio AB — Org.nr 559576-7772</span>
+        </div>
+      </div>
+      <form onSubmit="{{ submitForm }}" style="display:flex;flex-direction:column;gap:26px">
+        <label style="font-size:12px;color:#aaaaaa">Name
+          <input name="name" required="{{ true }}" autoComplete="name" placeholder="Your name" style="display:block;width:100%;border:0;border-bottom:1px solid #555555;background:transparent;color:#ffffff;outline:none;padding:14px 0;font-size:16px">
+        </label>
+        <label style="font-size:12px;color:#aaaaaa">Email
+          <input name="email" type="email" required="{{ true }}" autoComplete="email" placeholder="you@company.com" style="display:block;width:100%;border:0;border-bottom:1px solid #555555;background:transparent;color:#ffffff;outline:none;padding:14px 0;font-size:16px">
+        </label>
+        <label style="font-size:12px;color:#aaaaaa">Message
+          <textarea name="message" rows="4" placeholder="A few lines about the project" style="display:block;width:100%;border:0;border-bottom:1px solid #555555;background:transparent;color:#ffffff;outline:none;padding:14px 0;font-size:16px;resize:vertical"></textarea>
+        </label>
+        <button type="submit" style="align-self:flex-start;display:inline-flex;gap:40px;align-items:center;background:#f2f2f0;color:#111111;border:0;border-radius:999px;padding:14px 18px;font-weight:600;font-size:14px;cursor:pointer;transition:background 240ms" style-hover="background:#c8ff36">{{ formLabel }} <span>↗</span></button>
+      </form>
+    </section>
+
+    </div>
+
+  </main>
+  </sc-if>
+
+  <footer style="padding:70px clamp(14px,2.4vw,38px) 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:40px;align-items:start">
+    <a href="#top" onClick="{{ goHome }}" style="font-size:clamp(60px,10vw,150px);letter-spacing:-0.09em;line-height:0.8;font-weight:500;grid-column:1/-1">jay digital studio<sup style="font-size:0.2em">®</sup></a>
+    <p style="margin:0;line-height:1.5">Independent creative studio.<br>Göteborg · working worldwide.</p>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <a href="#work" style-hover="opacity:0.5">Work</a><a href="#studio" style-hover="opacity:0.5">Studio</a><a href="#services" style-hover="opacity:0.5">Services</a><a href="#journal" style-hover="opacity:0.5">Journal</a>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <a href="https://www.linkedin.com/in/designjay/" target="_blank" rel="noopener" style-hover="opacity:0.5">LinkedIn</a>
+      <a href="https://www.behance.net/iamjaydesign" target="_blank" rel="noopener" style-hover="opacity:0.5">Behance</a>
+      <a href="https://dribbble.com/Jay-Design" target="_blank" rel="noopener" style-hover="opacity:0.5">Dribbble</a>
+      <a href="mailto:Support@jaydigitalstudio.com" style-hover="opacity:0.5">Support@jaydigitalstudio.com</a>
+    </div>
+    <small style="grid-column:1/-1;border-top:1px solid #bbbbbb;padding-top:14px;margin-top:50px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#555555">© 2026 Jay Digital Studio AB — Org.nr 559576-7772 · jaydigitalstudio.com</small>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;heroOnTop&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hero scroll&quot;},&quot;heroDrift&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:36,&quot;min&quot;:0,&quot;max&quot;:60,&quot;step&quot;:2,&quot;unit&quot;:&quot;%&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Hero scroll&quot;},&quot;heroFadeOut&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hero scroll&quot;},&quot;heroReelDrift&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:4,&quot;min&quot;:0,&quot;max&quot;:14,&quot;step&quot;:1,&quot;unit&quot;:&quot;%&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Hero scroll&quot;}}">
+const PROJECTS = [
+  { slug:'world-of-volvo', title:'World of Volvo', category:'Interactive Media', year:'2024', thumb:'images/work/wov.png',
+    client:'World of Volvo', services:'3D visualization, interaction design, development', link:'https://www.worldofvolvo.com/sv/utstallning/',
+    intro:"A captivating interactive experience for the Volvo Experience Center's Diver Station. As UI/UX Designer and Unity Developer, I created an immersive environment that reveals Volvo's innovations and heritage in depth, enhancing the exhibition's informative layer for visitors eager to explore the brand's technological contributions.",
+    video:'https://iamjaydesign.com/images/assets/WOV/DIVER-Station.mp4',
+    gallery:[{r:2.37,src:'images/work/wov-hero.png',alt:'World of Volvo exhibition overview'},{r:1.74,src:'images/work/wov-1.png',alt:'World of Volvo interactive experience'},{r:1.74,src:'images/work/wov-2.png',alt:'World of Volvo 3D environment'},{r:1.58,src:'images/work/wov-3.png',alt:'World of Volvo delivery'},{r:1.51,src:'images/work/wov-4.png',alt:'World of Volvo 3D assets'},{r:1.67,src:'images/work/wov-5.png',alt:'World of Volvo station detail'}] },
+  { slug:'lf-digital-derby', title:'LF Digital Derby', category:'Advertisement', year:'2023', thumb:'images/work/lf-derby.png',
+    client:'LF Digital', services:'3D scanning, photogrammetry, facial capture, Unreal Engine development', link:'https://spelaroll.nu/',
+    intro:"An innovative digital FIFA derby match between IFK and Häcken football clubs in Gothenburg, Sweden. We scanned actual players using LIDAR and photogrammetry, created authentic uniforms with 3D garment software, and utilized Unreal's LiveLink face capture technology to bring the players to life with realistic expressions and movements.",
+    video:'https://iamjaydesign.com/images/assets/LFDigitalDerby/IFK-16-9-web.mp4',
+    gallery:[{r:1,src:'images/work/lf-derby-1.png',alt:'Digital derby player scan'},{r:1,src:'images/work/lf-derby-3.png',alt:'Digital derby uniform simulation'},{r:1,src:'images/work/lf-derby-2.png',alt:'Digital derby match render'},{r:1,src:'images/work/lf-derby-4.png',alt:'Digital derby stadium render'},{r:1,src:'images/work/lf-derby-5.png',alt:'Digital derby campaign still'}] },
+  { slug:'volvo-cars-ar', title:'Volvo Cars AR', category:'Augmented Reality', year:'2023', thumb:'images/work/volvo-ar.png',
+    client:'Volvo Cars', services:'Mobile AR, 3D visualization, UX/UI design', link:'https://apps.apple.com/se/app/volvo-cars-ar/id6448719010',
+    intro:'This is a mobile augmented reality experience that allows users to view and explore Volvo EX90, EX30 and ES90 in a new and engaging way. Users can place the AR models on any surface, view them from all angles, and capture screenshots of the cars in their real environment.',
+    video:'https://iamjaydesign.com/images/assets/Volvo%20Cars%20AR/Volvo%20AR-White.mp4',
+    gallery:[{r:1.26,src:'images/work/volvo-ar-1.png',alt:'Volvo Cars AR app screen'},{r:0.56,src:'images/work/volvo-ar-3.png',alt:'Volvo Cars AR model view'},{r:1.57,src:'images/work/volvo-ar-2.png',alt:'Volvo Cars AR model placement'},{r:1.92,src:'images/work/volvo-ar-4.png',alt:'Volvo Cars AR interface detail'},{r:1.78,src:'images/work/volvo-ar-5.png',alt:'Volvo Cars AR capture mode'}] },
+  { slug:'faurecia', title:'Cockpit of the Future', category:'Automotive HMI', year:'2023', thumb:'images/work/faurecia.png',
+    client:'Faurecia', services:'UX research, UI design, interaction design', link:'https://www.faurecia-cz.cz/en/technologies/cockpit-future',
+    intro:'An automotive HMI design project for Faurecia, a global tier-1 automotive supplier. The project focused on creating innovative infotainment and driver experience interfaces that balance aesthetics with safety and usability for next-generation vehicles.',
+    video:'',
+    gallery:[{r:1.95,src:'images/work/faurecia-1.png',alt:'Cockpit of the future interface'},{r:1.9,src:'images/work/faurecia-3.png',alt:'Cockpit HMI cluster'},{r:1.91,src:'images/work/faurecia-4.png',alt:'Cockpit HMI screen study'},{r:1.95,src:'images/work/faurecia-5.png',alt:'Cockpit interior view'},{r:0.67,src:'images/work/faurecia-2.png',alt:'Cockpit HMI detail'},{r:2.13,src:'images/work/faurecia-6.png',alt:'Cockpit concept render'}] },
+  { slug:'weret-watch', title:'Weret Watch', category:'Product Design', year:'2022', thumb:'images/work/weret.png',
+    client:'Weret', services:'Industrial design, 3D modeling, brand identity', link:'https://www.stokedfortravel.com/review-weret-luxury-surf-watch/',
+    intro:'A premium product design project for Weret, revolutionizing traditional timepieces with innovative technology and elegant aesthetics. This project combines detailed industrial design with thoughtful user experience.',
+    video:'video/weret-crown.mp4',
+    gallery:[{r:2.25,src:'images/work/weret-hero.png',alt:'Weret watch hero render'},{r:0.71,src:'images/work/weret-3.png',alt:'Weret watch case study'},{r:1.4,src:'images/work/weret-1.png',alt:'Weret watch render'},{r:0.83,src:'images/work/weret-2.png',alt:'Weret watch detail'},{r:1.78,src:'images/work/weret-4.png',alt:'Weret watch on wrist'}] },
+  { slug:'google-chromebook', title:'Google Chromebook UI', category:'Interface Design', year:'2020', thumb:'images/work/chromebook.png',
+    client:'Google', services:'UI design, UX research, design system', link:'https://www.google.com/chromebook/',
+    intro:"A streamlined interface design project for Google Chromebook, focusing on enhancing user experience while maintaining Google's signature simplicity. This design system creates a cohesive and intuitive experience across the platform.",
+    video:'',
+    gallery:[{r:2.37,src:'images/work/chromebook-1.png',alt:'Chromebook interface design'},{r:1.51,src:'images/work/chromebook-3.png',alt:'Chromebook UI system'},{r:1.51,src:'images/work/chromebook-2.png',alt:'Chromebook UI detail'},{r:1.51,src:'images/work/chromebook-4.png',alt:'Chromebook UI application'}] }
+];
+
+const SERVICES = [
+  { num:'(001)', title:'Art direction', body:'Concept, visual language and the rules that keep a brand coherent across every screen and surface.', tags:['Visual identity','Campaign concept','Guidelines','Art direction'] },
+  { num:'(002)', title:'UI/UX design', body:'Research, flows and interfaces for products used under real conditions — in cars, on factory floors, in pockets.', tags:['UX research','Interface design','Prototyping','Design systems'] },
+  { num:'(003)', title:'Motion graphics', body:'Motion that explains: product films, interface animation and campaign assets built from one system.', tags:['Product film','UI animation','Compositing','Sound'] },
+  { num:'(004)', title:'AR / VR', body:'Mobile augmented reality and immersive experiences, from 3D pipeline through to a shipped app.', tags:['Mobile AR','Exhibition','Unity','Unreal Engine'] },
+  { num:'(005)', title:'Real-time 3D', body:'Real-time and rendered 3D for products, vehicles and spaces, built to hold up at full resolution.', tags:['Real-time 3D','Product CGI','Photogrammetry','LIDAR scanning'] }
+];
+
+const PROCESS = [
+  { num:'01', title:'Understand the constraint before designing', image:'images/work/faurecia-3.png', alt:'Cockpit HMI research and cluster study' },
+  { num:'02', title:'Shape a system around the brief', image:'images/work/wov-4.png', alt:'3D asset system for the World of Volvo exhibition' },
+  { num:'03', title:'Prototype in the real medium, early', image:'images/work/lf-derby-1.png', alt:'Photogrammetry scan prototype for the digital derby' },
+  { num:'04', title:'Ship with the engineering team', image:'images/work/volvo-ar-3.png', alt:'Volvo Cars AR shipped on device' }
+];
+
+const FAQS = [
+  ['How long does a project take?', 'Focused interface projects run four to eight weeks. Exhibition installations and AR builds are planned in clear phases across a longer timeline.'],
+  ['Do you work with our in-house team?', 'Usually, yes. We plug into existing design and engineering teams, follow your systems and rituals, and hand over source files and documentation.'],
+  ['Can you handle the build as well as the design?', 'Real-time work in Unity and Unreal is built in-house. For web and app builds we design to spec and work alongside your developers.'],
+  ['What do you need to quote a project?', 'A short brief, the deadline, and who else is involved. A first call is enough to say whether we are the right studio for it.']
+];
+
+const POSTS = [
+  { date:'April 25, 2025', title:'Figma Meetup Recap: UX Design Insights from Redesigning a Food Delivery App', summary:'Recap of our recent Figma meetup in Göteborg, where designers collaborated to redesign a food delivery app, exploring UX insights and the latest Figma features.', image:'images/journal/figma-meetup.jpeg' },
+  { date:'February 27, 2025', title:'The Future of Design: Insights from Our Recent Meetup', summary:'Key takeaways from our design community meetup on emerging trends, AI tools, and collaborative approaches that are reshaping the creative landscape.', image:'images/journal/future-of-design.jpeg' },
+  { date:'January 20, 2025', title:'AI in UX and UX in AI: The Symbiotic Relationship', summary:'Explore the evolving relationship between artificial intelligence and user experience design, and how each discipline is transforming the other in profound ways.', image:'images/journal/ai-in-ux.jpeg' }
+];
+
+function buildBlocks(item) {
+  const g = (item.gallery || []).slice();
+  const blocks = [];
+  let k = 0;
+  const wide = (shot) => blocks.push({ key: 'w' + (k++), wide: true, pair: false, video: false, src: shot.src, alt: shot.alt, shots: [] });
+  const pair = (shots) => blocks.push({ key: 'p' + (k++), wide: false, pair: true, video: false, src: '', alt: '',
+    ratio: shots[0].r < 1 ? '3 / 4' : '3 / 2', shots });
+
+  let i = 0;
+  while (i < g.length) {
+    const a = g[i];
+    if (a.r >= 1.75) { wide(a); i += 1; continue; }
+    const b = g[i + 1];
+    const sameOrientation = b && ((a.r < 1 && b.r < 1) || (a.r >= 1 && b.r >= 1 && b.r < 1.75));
+    if (sameOrientation) { pair([a, b]); i += 2; } else { wide(a); i += 1; }
+  }
+  if (item.video) {
+    blocks.splice(Math.min(2, blocks.length), 0, { key: 'video', wide: false, pair: false, video: true, src: item.video, alt: '', shots: [] });
+  }
+  return blocks;
+}
+
+class Component extends DCLogic {
+  state = { caseIndex: -1, sent: false, heroMuted: true, openFaq: 0,
+    progress: 0, loaderVisible: true, loaderFading: false, menuOpen: false,
+    viewport: typeof window !== 'undefined' ? window.innerWidth : 1200 };
+
+  runLoader() {
+    const step = () => {
+      this.setState(s => {
+        const next = Math.min(100, s.progress + Math.max(1, Math.round((100 - s.progress) * 0.12)));
+        return { progress: next };
+      }, () => {
+        if (this.state.progress < 100) { this._loadTimer = setTimeout(step, 40); }
+        else {
+          this.setState({ loaderFading: true });
+          this._loadTimer = setTimeout(() => this.setState({ loaderVisible: false }), 650);
+        }
+      });
+    };
+    this._loadTimer = setTimeout(step, 120);
+  }
+
+  componentDidMount() {
+    this.animate();
+    this.runLoader();
+    this._onResize = () => {
+      if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+      if (Math.abs(window.innerWidth - this.state.viewport) > 40) this.setState({ viewport: window.innerWidth });
+    };
+    window.addEventListener('resize', this._onResize);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._onResize);
+    clearTimeout(this._loadTimer);
+  }
+  componentDidUpdate() { this.animate(); }
+
+  animate() {
+    const g = window.gsap;
+    if (!g || this._raf) return;
+    this._raf = requestAnimationFrame(() => {
+      this._raf = null;
+      if (window.ScrollTrigger) g.registerPlugin(window.ScrollTrigger);
+      document.querySelectorAll('[data-reveal]:not([data-done])').forEach(el => {
+        el.setAttribute('data-done', '1');
+        g.from(el, { y: 36, opacity: 0, duration: 0.85, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 90%' } });
+      });
+      document.querySelectorAll('[data-pop]:not([data-done])').forEach(el => el.setAttribute('data-done', '1'));
+      document.querySelectorAll('[data-reveal]').forEach(card => {
+        const pops = card.querySelectorAll('[data-pop]');
+        if (!pops.length || card.getAttribute('data-pop-set')) return;
+        card.setAttribute('data-pop-set', '1');
+        g.from(pops, { scale: 0.55, opacity: 0, rotate: -6, transformOrigin: 'center', duration: 0.62,
+          ease: 'back.out(2.2)', stagger: 0.055,
+          scrollTrigger: { trigger: card, start: 'top 82%' } });
+      });
+
+      document.querySelectorAll('[data-count]:not([data-done])').forEach(el => {
+        el.setAttribute('data-done', '1');
+        const target = Number(el.getAttribute('data-count'));
+        const obj = { v: 0 };
+        g.to(obj, { v: target, duration: 1.6, ease: 'power2.out',
+          onUpdate: () => { el.textContent = Math.round(obj.v); },
+          scrollTrigger: { trigger: el, start: 'top 92%' } });
+      });
+      document.querySelectorAll('h2:not([data-done])').forEach(el => {
+        el.setAttribute('data-done', '1');
+        g.from(el, { y: 26, opacity: 0, duration: 0.8, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 92%' } });
+      });
+
+      if (window.ScrollTrigger) {
+        const hero = document.getElementById('top');
+        const onTop = this.props.heroOnTop ?? true;
+        if (hero && onTop && !hero.getAttribute('data-par')) {
+          hero.setAttribute('data-par', '1');
+          const drift = this.props.heroDrift ?? 36;
+          const reel = this.props.heroReelDrift ?? 4;
+          const fade = this.props.heroFadeOut ?? false;
+          const st = { trigger: hero, start: 'top top', end: 'bottom top', scrub: 0.6 };
+          g.to(hero, { yPercent: -drift, opacity: fade ? 0 : 1, ease: 'none', scrollTrigger: st });
+          const video = hero.querySelector('video');
+          if (video && reel) g.fromTo(video, { yPercent: -reel, scale: 1 + reel / 40 }, { yPercent: reel, scale: 1 + reel / 40, ease: 'none', scrollTrigger: st });
+        }
+
+        document.querySelectorAll('#work a img:not([data-par])').forEach(img => {
+          img.setAttribute('data-par', '1');
+          g.fromTo(img, { yPercent: -3 }, { yPercent: 3, ease: 'none',
+            scrollTrigger: { trigger: img.parentElement, start: 'top bottom', end: 'bottom top', scrub: 0.6 } });
+        });
+        window.ScrollTrigger.refresh();
+      }
+    });
+  }
+
+  select(i) {
+    return (e) => {
+      if (e) e.preventDefault();
+      this.setState({ caseIndex: i });
+      const toTop = () => {
+        try { window.scrollTo(0, 0); } catch (err) {}
+        if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        let el = document.getElementById('dc-root');
+        while (el) { if (el.scrollTop) el.scrollTop = 0; el = el.parentElement; }
+      };
+      toTop();
+      requestAnimationFrame(toTop);
+      setTimeout(toTop, 60);
+    };
+  }
+
+  renderVals() {
+    const i = this.state.caseIndex;
+    const showCase = i >= 0;
+    const item = showCase ? PROJECTS[i] : PROJECTS[0];
+    const prev = PROJECTS[(i - 1 + PROJECTS.length) % PROJECTS.length];
+    const next = PROJECTS[(i + 1) % PROJECTS.length];
+    return {
+      showHome: !showCase,
+      showCase,
+      caseItem: item,
+      caseBlocks: buildBlocks(item),
+      caseNumber: showCase ? '(' + String(i + 1).padStart(3, '0') + ')' : '',
+      prevTitle: prev.title,
+      nextTitle: next.title,
+      prevCase: this.select((i - 1 + PROJECTS.length) % PROJECTS.length),
+      nextCase: this.select((i + 1) % PROJECTS.length),
+      goHome: (e) => { if (e) e.preventDefault(); this.setState({ caseIndex: -1 }); },
+      projects: PROJECTS.map((p, idx) => ({ ...p, num: String(idx + 1).padStart(2, '0'), open: this.select(idx) })),
+      services: SERVICES,
+      process: PROCESS,
+      posts: POSTS,
+      faqs: FAQS.map((f, idx) => ({
+        q: f[0], a: f[1],
+        open: this.state.openFaq === idx,
+        sign: this.state.openFaq === idx ? '−' : '+',
+        toggle: () => this.setState(s => ({ openFaq: s.openFaq === idx ? -1 : idx }))
+      })),
+      heroPosition: 'relative',
+      heroZ: (this.props.heroOnTop ?? true) ? 10 : 'auto',
+      showLoader: this.state.loaderVisible,
+      loaderOpacity: this.state.loaderFading ? 0 : 1,
+      progressLabel: String(this.state.progress).padStart(3, '0'),
+      progressWidth: this.state.progress + '%',
+      isMobile: this.state.viewport < 820,
+      isDesktop: this.state.viewport >= 820,
+      menuOpen: this.state.menuOpen && this.state.viewport < 820,
+      menuLabel: this.state.menuOpen ? 'Close' : 'Menu',
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      heroMuted: this.state.heroMuted,
+      heroSoundLabel: this.state.heroMuted ? 'Sound on' : 'Sound off',
+      toggleHeroSound: () => this.setState(s => ({ heroMuted: !s.heroMuted })),
+      formLabel: this.state.sent ? 'Thanks — we\u2019ll be in touch' : 'Send message',
+      submitForm: (e) => { e.preventDefault(); this.setState({ sent: true }); }
+    };
+  }
+}
+
+</script>
 </body>
 </html>
