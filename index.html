@@ -33,6 +33,7 @@
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } *, *::before, *::after { animation:none !important; transition:none !important; } }
   @media (max-width: 700px) {
     .jds-loader { padding:20px !important; }
+    .jds-hero, .jds-hero-media { transform:none !important; }
     .jds-hero { min-height:calc(100svh - 74px) !important; border-radius:20px !important; padding:24px 16px 180px !important; }
     .jds-hero-wordmark { font-size:clamp(76px,27vw,112px) !important; line-height:0.74 !important; }
     .jds-hero-submark { margin:6px 0 0 31% !important; font-size:clamp(27px,8.2vw,38px) !important; }
@@ -127,21 +128,30 @@
           <div>
             <sc-if value="{{ block.wide }}" hint-placeholder-val="{{ true }}">
               <div data-reveal="" style="border-radius:22px;overflow:hidden;background:#d7d7d1">
-                <img src="{{ block.src }}" alt="{{ block.alt }}" loading="lazy" decoding="async" style="width:100%;height:auto;display:block">
+                <picture>
+                  <source media="(max-width:700px)" srcSet="{{ block.mobileSrc }}">
+                  <img src="{{ block.src }}" alt="{{ block.alt }}" loading="lazy" decoding="async" style="width:100%;height:auto;display:block">
+                </picture>
               </div>
             </sc-if>
             <sc-if value="{{ block.pair }}" hint-placeholder-val="{{ false }}">
               <div class="jds-case-pair" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(14px,1.8vw,24px)">
                 <sc-for list="{{ block.shots }}" as="shot" hint-placeholder-count="2">
                   <div data-reveal="" style="border-radius:22px;overflow:hidden;background:#d7d7d1;aspect-ratio:{{ block.ratio }}">
-                    <img src="{{ shot.src }}" alt="{{ shot.alt }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block">
+                    <picture style="display:block;width:100%;height:100%">
+                      <source media="(max-width:700px)" srcSet="{{ shot.mobileSrc }}">
+                      <img src="{{ shot.src }}" alt="{{ shot.alt }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block">
+                    </picture>
                   </div>
                 </sc-for>
               </div>
             </sc-if>
             <sc-if value="{{ block.video }}" hint-placeholder-val="{{ false }}">
               <div data-reveal="" style="border-radius:22px;overflow:hidden;background:#171717">
-                <video src="{{ block.src }}" autoPlay="{{ true }}" loop="{{ true }}" muted="{{ true }}" playsInline="{{ true }}" controls="{{ true }}" style="width:100%;height:auto;display:block"></video>
+                <video data-case-video="" loop="{{ true }}" muted="{{ true }}" playsInline="{{ true }}" controls="{{ true }}" preload="none" poster="{{ block.poster }}" style="width:100%;height:auto;display:block">
+                  <source src="{{ block.mobileSrc }}" type="video/mp4" media="(max-width:700px)">
+                  <source src="{{ block.src }}" type="video/mp4">
+                </video>
               </div>
             </sc-if>
           </div>
@@ -387,7 +397,10 @@
         <sc-for list="{{ posts }}" as="post" hint-placeholder-count="3">
           <a href="{{ post.link }}" target="_blank" rel="noopener" data-reveal="" style="display:flex;flex-direction:column">
             <div style="border-radius:22px;overflow:hidden;aspect-ratio:16/11;background:#d7d7d1">
-              <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 900ms cubic-bezier(0.16,1,0.3,1)" style-hover="transform:scale(1.05)">
+              <picture style="display:block;width:100%;height:100%">
+                <source media="(max-width:700px)" srcSet="{{ post.mobileImage }}">
+                <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 900ms cubic-bezier(0.16,1,0.3,1)" style-hover="transform:scale(1.05)">
+              </picture>
             </div>
             <p style="margin:16px 0 8px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#555555">{{ post.date }}</p>
             <h3 style="margin:0 0 10px;font-size:23px;font-weight:500;letter-spacing:-0.04em;line-height:1.15;text-wrap:pretty">{{ post.title }}</h3>
@@ -471,17 +484,17 @@ const PROJECTS = [
   { slug:'world-of-volvo', title:'World of Volvo', category:'Interactive Media', year:'2024', thumb:'images/work/thumbs/wov.jpg',
     client:'World of Volvo', services:'3D visualization, interaction design, development', link:'https://www.worldofvolvo.com/sv/utstallning/',
     intro:"A captivating interactive experience for the Volvo Experience Center's Diver Station. As UI/UX Designer and Unity Developer, I created an immersive environment that reveals Volvo's innovations and heritage in depth, enhancing the exhibition's informative layer for visitors eager to explore the brand's technological contributions.",
-    video:'https://iamjaydesign.com/images/assets/WOV/DIVER-Station.mp4',
+    video:'https://iamjaydesign.com/images/assets/WOV/DIVER-Station.mp4', mobileVideo:'video/mobile/world-of-volvo.mp4',
     gallery:[{r:2.37,src:'images/work/wov-hero.png',alt:'World of Volvo exhibition overview'},{r:1.74,src:'images/work/wov-1.png',alt:'World of Volvo interactive experience'},{r:1.74,src:'images/work/wov-2.png',alt:'World of Volvo 3D environment'},{r:1.58,src:'images/work/wov-3.png',alt:'World of Volvo delivery'},{r:1.51,src:'images/work/wov-4.png',alt:'World of Volvo 3D assets'},{r:1.67,src:'images/work/wov-5.png',alt:'World of Volvo station detail'}] },
   { slug:'lf-digital-derby', title:'LF Digital Derby', category:'Advertisement', year:'2023', thumb:'images/work/thumbs/lf-derby.jpg',
     client:'LF Digital', services:'3D scanning, photogrammetry, facial capture, Unreal Engine development', link:'https://spelaroll.nu/',
     intro:"An innovative digital FIFA derby match between IFK and Häcken football clubs in Gothenburg, Sweden. We scanned actual players using LIDAR and photogrammetry, created authentic uniforms with 3D garment software, and utilized Unreal's LiveLink face capture technology to bring the players to life with realistic expressions and movements.",
-    video:'https://iamjaydesign.com/images/assets/LFDigitalDerby/IFK-16-9-web.mp4',
+    video:'https://iamjaydesign.com/images/assets/LFDigitalDerby/IFK-16-9-web.mp4', mobileVideo:'video/mobile/lf-digital-derby.mp4',
     gallery:[{r:1,src:'images/work/lf-derby-1.png',alt:'Digital derby player scan'},{r:1,src:'images/work/lf-derby-3.png',alt:'Digital derby uniform simulation'},{r:1,src:'images/work/lf-derby-2.png',alt:'Digital derby match render'},{r:1,src:'images/work/lf-derby-4.png',alt:'Digital derby stadium render'},{r:1,src:'images/work/lf-derby-5.png',alt:'Digital derby campaign still'}] },
   { slug:'volvo-cars-ar', title:'Volvo Cars AR', category:'Augmented Reality', year:'2023', thumb:'images/work/thumbs/volvo-ar.jpg',
     client:'Volvo Cars', services:'Mobile AR, 3D visualization, UX/UI design', link:'https://apps.apple.com/se/app/volvo-cars-ar/id6448719010',
     intro:'This is a mobile augmented reality experience that allows users to view and explore Volvo EX90, EX30 and ES90 in a new and engaging way. Users can place the AR models on any surface, view them from all angles, and capture screenshots of the cars in their real environment.',
-    video:'https://iamjaydesign.com/images/assets/Volvo%20Cars%20AR/Volvo%20AR-White.mp4',
+    video:'https://iamjaydesign.com/images/assets/Volvo%20Cars%20AR/Volvo%20AR-White.mp4', mobileVideo:'video/mobile/volvo-cars-ar.mp4',
     gallery:[{r:1.26,src:'images/work/volvo-ar-1.png',alt:'Volvo Cars AR app screen'},{r:0.56,src:'images/work/volvo-ar-3.png',alt:'Volvo Cars AR model view'},{r:1.57,src:'images/work/volvo-ar-2.png',alt:'Volvo Cars AR model placement'},{r:1.92,src:'images/work/volvo-ar-4.png',alt:'Volvo Cars AR interface detail'},{r:1.78,src:'images/work/volvo-ar-5.png',alt:'Volvo Cars AR capture mode'}] },
   { slug:'faurecia', title:'Cockpit of the Future', category:'Automotive HMI', year:'2023', thumb:'images/work/thumbs/faurecia.jpg',
     client:'Faurecia', services:'UX research, UI design, interaction design', link:'https://www.faurecia-cz.cz/en/technologies/cockpit-future',
@@ -491,7 +504,7 @@ const PROJECTS = [
   { slug:'weret-watch', title:'Weret Watch', category:'Product Design', year:'2022', thumb:'images/work/thumbs/weret.jpg',
     client:'Weret', services:'Industrial design, 3D modeling, brand identity', link:'https://www.stokedfortravel.com/review-weret-luxury-surf-watch/',
     intro:'A premium product design project for Weret, revolutionizing traditional timepieces with innovative technology and elegant aesthetics. This project combines detailed industrial design with thoughtful user experience.',
-    video:'video/weret-crown.mp4',
+    video:'video/weret-crown.mp4', mobileVideo:'video/mobile/weret-crown.mp4',
     gallery:[{r:2.25,src:'images/work/weret-hero.png',alt:'Weret watch hero render'},{r:0.71,src:'images/work/weret-3.png',alt:'Weret watch case study'},{r:1.4,src:'images/work/weret-1.png',alt:'Weret watch render'},{r:0.83,src:'images/work/weret-2.png',alt:'Weret watch detail'},{r:1.78,src:'images/work/weret-4.png',alt:'Weret watch on wrist'}] },
   { slug:'google-chromebook', title:'Google Chromebook UI', category:'Interface Design', year:'2020', thumb:'images/work/thumbs/chromebook.jpg',
     client:'Google', services:'UI design, UX research, design system', link:'https://www.google.com/chromebook/',
@@ -501,27 +514,27 @@ const PROJECTS = [
   { slug:'gordon-murray', title:'Gordon Murray Design', category:'Automotive HMI', year:'2021', thumb:'images/work/thumbs/gordon-murray.jpg',
     client:'Gordon Murray Design', services:'UI design, interaction design, user testing', link:'https://www.gordonmurrayautomotive.com/automotive/t50',
     intro:"A sophisticated automotive HMI design project for Gordon Murray Design. The work focused on next-generation interfaces that enhance the driving experience while preserving the brand's iconic, driver-first design language.",
-    video:'https://iamjaydesign.com/images/assets/GMA/Videos/T.50%20Continued%20Development%20of%20XP2%20&%20XP3.mp4',
+    video:'https://iamjaydesign.com/images/assets/GMA/Videos/T.50%20Continued%20Development%20of%20XP2%20&%20XP3.mp4', mobileVideo:'video/mobile/gordon-murray.mp4',
     gallery:[{r:1.78,src:'images/work/gordon-murray.png',alt:'Gordon Murray Design HMI overview'},{r:1.78,src:'images/work/gordon-murray-1.png',alt:'Gordon Murray interface components'},{r:1.78,src:'images/work/gordon-murray-2.png',alt:'Gordon Murray dashboard design'}] },
   { slug:'esab', title:'ESAB', category:'Interactive Application', year:'2024', thumb:'images/work/thumbs/esab.jpg',
     client:'ESAB', services:'UI/UX design, interactive development', link:'https://www.esab.com/',
     intro:"A cutting-edge interactive application for ESAB, a global leader in welding and cutting equipment. The experience presents products and technologies in an immersive, approachable way, helping audiences explore complex features in detail.",
-    video:'https://iamjaydesign.com/images/assets/ESAB/ESAB-Interactive%20App.mp4',
+    video:'https://iamjaydesign.com/images/assets/ESAB/ESAB-Interactive%20App.mp4', mobileVideo:'video/mobile/esab.mp4',
     gallery:[{r:1.78,src:'images/work/esab.png',alt:'ESAB interactive application overview'},{r:1.78,src:'images/work/esab-1.png',alt:'ESAB interactive interface'},{r:1.78,src:'images/work/esab-2.png',alt:'ESAB application detail'}] },
   { slug:'magna', title:'Magna', category:'Automotive HMI', year:'2023', thumb:'images/work/thumbs/magna.jpg',
     client:'Magna', services:'UI/UX design, interaction design, prototyping', link:'https://www.magna.com/',
     intro:"An advanced cockpit experience for Magna that integrates emerging automotive technology with human-centered interaction design. The result is an intuitive interface concept for the next generation of vehicles.",
-    video:'https://iamjaydesign.com/images/assets/Magna/Magna-CP-rev-12thDec.mp4',
+    video:'https://iamjaydesign.com/images/assets/Magna/Magna-CP-rev-12thDec.mp4', mobileVideo:'video/mobile/magna.mp4',
     gallery:[{r:1.78,src:'images/work/magna.png',alt:'Magna automotive HMI overview'},{r:1.78,src:'images/work/magna-1.png',alt:'Magna automotive interface'},{r:1.78,src:'images/work/magna-2.png',alt:'Magna dashboard design'}] },
   { slug:'volvo-group-ar', title:'Volvo Group AR', category:'Augmented Reality', year:'2020', thumb:'images/work/thumbs/volvo-group-ar.jpg',
     client:'Volvo Group', services:'AR development, UI/UX design, interactive media', link:'https://www.volvogroup.com/',
     intro:"An augmented reality experience for Volvo Group's Ocean Race exhibition. Visitors could explore maritime technologies and sustainability stories through immersive digital content layered over the physical exhibition.",
-    video:'https://iamjaydesign.com/images/assets/Volvo%20Group%20AR/Volvo%20Group%20Ocean%20Race%20Interactive%20Play-Product%20Video.mp4',
+    video:'https://iamjaydesign.com/images/assets/Volvo%20Group%20AR/Volvo%20Group%20Ocean%20Race%20Interactive%20Play-Product%20Video.mp4', mobileVideo:'video/mobile/volvo-group-ar.mp4',
     gallery:[{r:1.78,src:'images/work/volvo-group-ar.jpg',alt:'Volvo Group Ocean Race AR experience'},{r:1.78,src:'images/work/volvo-group-ar-1.jpg',alt:'Volvo Group AR interface'},{r:1.78,src:'images/work/volvo-group-ar-2.jpg',alt:'Volvo Group exhibition environment'}] },
   { slug:'geely-motors', title:'Geely Motors', category:'Automotive HMI', year:'2020', thumb:'images/work/thumbs/geely-motors.jpg',
     client:'Geely Motors', services:'UI/UX design, interaction design, prototyping', link:'https://global.geely.com/',
     intro:"An automotive HMI concept for Geely Motors that reimagines the in-car user experience. The interface integrates connected technology with intuitive interaction patterns while keeping safety and accessibility central.",
-    video:'https://iamjaydesign.com/images/assets/Geely%20Motors/Geely-Liv%20Demo%20Video-Optimized.mp4',
+    video:'https://iamjaydesign.com/images/assets/Geely%20Motors/Geely-Liv%20Demo%20Video-Optimized.mp4', mobileVideo:'video/mobile/geely-motors.mp4',
     gallery:[{r:1.78,src:'images/work/geely-motors.png',alt:'Geely Motors HMI overview'},{r:1.78,src:'images/work/geely-motors-1.png',alt:'Geely Motors interface'},{r:1.78,src:'images/work/geely-motors-2.png',alt:'Geely Motors dashboard'}] }
 ];
 
@@ -553,13 +566,19 @@ const POSTS = [
   { date:'January 20, 2025', title:'AI in UX and UX in AI: The Symbiotic Relationship', summary:'Explore the evolving relationship between artificial intelligence and user experience design, and how each discipline is transforming the other in profound ways.', image:'images/journal/ai-in-ux.jpeg', link:'https://iamjaydesign.com/blog/ai-in-ux-design' }
 ];
 
+function mobileImagePath(src) {
+  const match = String(src || '').match(/^images\/(work|journal)\/(.+)\.(?:png|jpe?g)$/i);
+  return match ? 'images/mobile/' + match[1] + '/' + match[2] + '.jpg' : src;
+}
+
 function buildBlocks(item) {
   const g = (item.gallery || []).slice();
   const blocks = [];
   let k = 0;
-  const wide = (shot) => blocks.push({ key: 'w' + (k++), wide: true, pair: false, video: false, src: shot.src, alt: shot.alt, shots: [] });
+  const wide = (shot) => blocks.push({ key: 'w' + (k++), wide: true, pair: false, video: false,
+    src: shot.src, mobileSrc: mobileImagePath(shot.src), alt: shot.alt, shots: [] });
   const pair = (shots) => blocks.push({ key: 'p' + (k++), wide: false, pair: true, video: false, src: '', alt: '',
-    ratio: shots[0].r < 1 ? '3 / 4' : '3 / 2', shots });
+    ratio: shots[0].r < 1 ? '3 / 4' : '3 / 2', shots: shots.map(shot => ({ ...shot, mobileSrc: mobileImagePath(shot.src) })) });
 
   let i = 0;
   while (i < g.length) {
@@ -570,7 +589,8 @@ function buildBlocks(item) {
     if (sameOrientation) { pair([a, b]); i += 2; } else { wide(a); i += 1; }
   }
   if (item.video) {
-    blocks.splice(Math.min(2, blocks.length), 0, { key: 'video', wide: false, pair: false, video: true, src: item.video, alt: '', shots: [] });
+    blocks.splice(Math.min(2, blocks.length), 0, { key: 'video', wide: false, pair: false, video: true,
+      src: item.video, mobileSrc: item.mobileVideo || item.video, poster: item.thumb, alt: '', shots: [] });
   }
   return blocks;
 }
@@ -639,6 +659,7 @@ class Component extends DCLogic {
   componentWillUnmount() {
     this._loaderUnmounted = true;
     window.removeEventListener('resize', this._onResize);
+    if (this._caseVideoObserver) this._caseVideoObserver.disconnect();
     (this._loaderCleanups || []).forEach(cleanup => cleanup());
     clearTimeout(this._loaderFadeTimer);
     clearTimeout(this._loaderHideTimer);
@@ -680,25 +701,71 @@ class Component extends DCLogic {
           scrollTrigger: { trigger: el, start: 'top 92%' } });
       });
 
+      if ('IntersectionObserver' in window) {
+        if (!this._caseVideoObserver) {
+          this._observedVideos = new Set();
+          this._caseVideoObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+              const media = entry.target;
+              if (entry.isIntersecting) media.play().catch(() => undefined);
+              else media.pause();
+            });
+          }, { rootMargin: '180px 0px' });
+        }
+        this._observedVideos.forEach(media => {
+          if (!media.isConnected) {
+            this._caseVideoObserver.unobserve(media);
+            this._observedVideos.delete(media);
+          }
+        });
+        document.querySelectorAll('video[data-case-video]:not([data-observed])').forEach(media => {
+          media.setAttribute('data-observed', '1');
+          this._observedVideos.add(media);
+          this._caseVideoObserver.observe(media);
+        });
+      }
+
       if (window.ScrollTrigger) {
         const hero = document.getElementById('top');
         const onTop = this.props.heroOnTop ?? true;
-        if (hero && onTop && !hero.getAttribute('data-par')) {
-          hero.setAttribute('data-par', '1');
-          const drift = this.props.heroDrift ?? 36;
-          const reel = this.props.heroReelDrift ?? 4;
-          const fade = this.props.heroFadeOut ?? false;
-          const st = { trigger: hero, start: 'top top', end: 'bottom top', scrub: 0.6 };
-          g.to(hero, { yPercent: -drift, opacity: fade ? 0 : 1, ease: 'none', scrollTrigger: st });
-          const video = hero.querySelector('video');
-          if (video && reel) g.fromTo(video, { yPercent: -reel, scale: 1 + reel / 40 }, { yPercent: reel, scale: 1 + reel / 40, ease: 'none', scrollTrigger: st });
-        }
+        const video = hero && hero.querySelector('video');
+        const mobileMotion = window.matchMedia('(max-width: 700px), (prefers-reduced-motion: reduce)').matches;
 
-        document.querySelectorAll('#work a img:not([data-par])').forEach(img => {
-          img.setAttribute('data-par', '1');
-          g.fromTo(img, { yPercent: -3 }, { yPercent: 3, ease: 'none',
-            scrollTrigger: { trigger: img.parentElement, start: 'top bottom', end: 'bottom top', scrub: 0.6 } });
-        });
+        if (mobileMotion) {
+          ['jds-hero-parallax', 'jds-hero-reel-parallax'].forEach(id => {
+            const trigger = window.ScrollTrigger.getById(id);
+            if (trigger) trigger.kill();
+          });
+          if (hero) {
+            hero.removeAttribute('data-par');
+            g.set(hero, { clearProps: 'transform,opacity' });
+          }
+          if (video) g.set(video, { clearProps: 'transform' });
+          document.querySelectorAll('#work a img[data-par]').forEach(img => {
+            window.ScrollTrigger.getAll().filter(trigger => trigger.trigger === img.parentElement).forEach(trigger => trigger.kill());
+            img.removeAttribute('data-par');
+            g.set(img, { clearProps: 'transform' });
+          });
+        } else {
+          if (hero && onTop && !hero.getAttribute('data-par')) {
+            hero.setAttribute('data-par', '1');
+            const drift = this.props.heroDrift ?? 36;
+            const reel = this.props.heroReelDrift ?? 4;
+            const fade = this.props.heroFadeOut ?? false;
+            g.to(hero, { yPercent: -drift, opacity: fade ? 0 : 1, ease: 'none',
+              scrollTrigger: { id: 'jds-hero-parallax', trigger: hero, start: 'top top', end: 'bottom top', scrub: 0.6 } });
+            if (video && reel) g.fromTo(video,
+              { yPercent: -reel, scale: 1 + reel / 40 },
+              { yPercent: reel, scale: 1 + reel / 40, ease: 'none',
+                scrollTrigger: { id: 'jds-hero-reel-parallax', trigger: hero, start: 'top top', end: 'bottom top', scrub: 0.6 } });
+          }
+
+          document.querySelectorAll('#work a img:not([data-par])').forEach(img => {
+            img.setAttribute('data-par', '1');
+            g.fromTo(img, { yPercent: -3 }, { yPercent: 3, ease: 'none',
+              scrollTrigger: { trigger: img.parentElement, start: 'top bottom', end: 'bottom top', scrub: 0.6 } });
+          });
+        }
         window.ScrollTrigger.refresh();
       }
     });
@@ -742,7 +809,7 @@ class Component extends DCLogic {
       projects: PROJECTS.map((p, idx) => ({ ...p, num: String(idx + 1).padStart(2, '0'), open: this.select(idx) })),
       services: SERVICES,
       process: PROCESS,
-      posts: POSTS,
+      posts: POSTS.map(post => ({ ...post, mobileImage: mobileImagePath(post.image) })),
       faqs: FAQS.map((f, idx) => ({
         q: f[0], a: f[1],
         open: this.state.openFaq === idx,
