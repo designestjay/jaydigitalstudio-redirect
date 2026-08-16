@@ -31,9 +31,12 @@
   .jds-hero > :not(.jds-hero-media):not(.jds-hero-overlay) { position:relative; z-index:2; }
   @keyframes jds-marq { from { transform:translateX(0); } to { transform:translateX(-50%); } }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } *, *::before, *::after { animation:none !important; transition:none !important; } }
+  @media (max-width: 820px) {
+    .jds-hero, .jds-hero-media { transform:none !important; }
+    [data-reveal], [data-pop], h2 { opacity:1 !important; transform:none !important; }
+  }
   @media (max-width: 700px) {
     .jds-loader { padding:20px !important; }
-    .jds-hero, .jds-hero-media { transform:none !important; }
     .jds-hero { min-height:calc(100svh - 74px) !important; border-radius:20px !important; padding:24px 16px 180px !important; }
     .jds-hero-wordmark { font-size:clamp(76px,27vw,112px) !important; line-height:0.74 !important; }
     .jds-hero-submark { margin:6px 0 0 31% !important; font-size:clamp(27px,8.2vw,38px) !important; }
@@ -672,34 +675,53 @@ class Component extends DCLogic {
     this._raf = requestAnimationFrame(() => {
       this._raf = null;
       if (window.ScrollTrigger) g.registerPlugin(window.ScrollTrigger);
-      document.querySelectorAll('[data-reveal]:not([data-done])').forEach(el => {
-        el.setAttribute('data-done', '1');
-        g.from(el, { y: 36, opacity: 0, duration: 0.85, ease: 'power3.out',
-          scrollTrigger: { trigger: el, start: 'top 90%' } });
-      });
-      document.querySelectorAll('[data-pop]:not([data-done])').forEach(el => el.setAttribute('data-done', '1'));
-      document.querySelectorAll('[data-reveal]').forEach(card => {
-        const pops = card.querySelectorAll('[data-pop]');
-        if (!pops.length || card.getAttribute('data-pop-set')) return;
-        card.setAttribute('data-pop-set', '1');
-        g.from(pops, { scale: 0.55, opacity: 0, rotate: -6, transformOrigin: 'center', duration: 0.62,
-          ease: 'back.out(2.2)', stagger: 0.055,
-          scrollTrigger: { trigger: card, start: 'top 82%' } });
-      });
+      const staticMotion = window.matchMedia('(max-width: 820px), (prefers-reduced-motion: reduce)').matches;
+      const canScrollAnimate = !staticMotion && !!window.ScrollTrigger;
 
-      document.querySelectorAll('[data-count]:not([data-done])').forEach(el => {
-        el.setAttribute('data-done', '1');
-        const target = Number(el.getAttribute('data-count'));
-        const obj = { v: 0 };
-        g.to(obj, { v: target, duration: 1.6, ease: 'power2.out',
-          onUpdate: () => { el.textContent = Math.round(obj.v); },
-          scrollTrigger: { trigger: el, start: 'top 92%' } });
-      });
-      document.querySelectorAll('h2:not([data-done])').forEach(el => {
-        el.setAttribute('data-done', '1');
-        g.from(el, { y: 26, opacity: 0, duration: 0.8, ease: 'power3.out',
-          scrollTrigger: { trigger: el, start: 'top 92%' } });
-      });
+      if (canScrollAnimate) {
+        document.querySelectorAll('[data-reveal]:not([data-done])').forEach(el => {
+          el.setAttribute('data-done', '1');
+          g.from(el, { y: 36, opacity: 0, duration: 0.85, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 90%' } });
+        });
+        document.querySelectorAll('[data-pop]:not([data-done])').forEach(el => el.setAttribute('data-done', '1'));
+        document.querySelectorAll('[data-reveal]').forEach(card => {
+          const pops = card.querySelectorAll('[data-pop]');
+          if (!pops.length || card.getAttribute('data-pop-set')) return;
+          card.setAttribute('data-pop-set', '1');
+          g.from(pops, { scale: 0.55, opacity: 0, rotate: -6, transformOrigin: 'center', duration: 0.62,
+            ease: 'back.out(2.2)', stagger: 0.055,
+            scrollTrigger: { trigger: card, start: 'top 82%' } });
+        });
+
+        document.querySelectorAll('[data-count]:not([data-done])').forEach(el => {
+          el.setAttribute('data-done', '1');
+          const target = Number(el.getAttribute('data-count'));
+          const obj = { v: 0 };
+          g.to(obj, { v: target, duration: 1.6, ease: 'power2.out',
+            onUpdate: () => { el.textContent = Math.round(obj.v); },
+            scrollTrigger: { trigger: el, start: 'top 92%' } });
+        });
+        document.querySelectorAll('h2:not([data-done])').forEach(el => {
+          el.setAttribute('data-done', '1');
+          g.from(el, { y: 26, opacity: 0, duration: 0.8, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 92%' } });
+        });
+      } else {
+        const visibleTargets = [...document.querySelectorAll('[data-reveal], [data-pop], h2')];
+        if (window.ScrollTrigger) {
+          const visibleSet = new Set(visibleTargets);
+          window.ScrollTrigger.getAll().filter(trigger => visibleSet.has(trigger.trigger)).forEach(trigger => trigger.kill());
+        }
+        visibleTargets.forEach(el => {
+          el.setAttribute('data-done', '1');
+          g.set(el, { clearProps: 'opacity,transform' });
+        });
+        document.querySelectorAll('[data-count]').forEach(el => {
+          el.setAttribute('data-done', '1');
+          el.textContent = String(Number(el.getAttribute('data-count')) || 0);
+        });
+      }
 
       if ('IntersectionObserver' in window) {
         if (!this._caseVideoObserver) {
@@ -729,7 +751,7 @@ class Component extends DCLogic {
         const hero = document.getElementById('top');
         const onTop = this.props.heroOnTop ?? true;
         const video = hero && hero.querySelector('video');
-        const mobileMotion = window.matchMedia('(max-width: 700px), (prefers-reduced-motion: reduce)').matches;
+        const mobileMotion = staticMotion;
 
         if (mobileMotion) {
           ['jds-hero-parallax', 'jds-hero-reel-parallax'].forEach(id => {
