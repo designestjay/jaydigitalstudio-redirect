@@ -1,2 +1,8 @@
-# jaydigitalstudio-redirect
-Static GitHub Pages redirect from jaydigitalstudio.com to iamjaydesign.com, preserving path, query, and fragment.
+# jaydigitalstudio.com redirect
+
+This static GitHub Pages site redirects `jaydigitalstudio.com` to
+[https://iamjaydesign.com/](https://iamjaydesign.com/) while preserving the
+requested path, query string, and fragment.
+
+Both `index.html` and `404.html` contain the redirect so direct requests to
+nested paths are handled. The custom domain is declared in `CNAME`.
