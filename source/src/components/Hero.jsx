@@ -48,7 +48,7 @@ export default function Hero() {
         <source src="/video/work-reel-jaydigitalstudio-desktop.mp4" type="video/mp4" />
       </video>
       <div className="hero-overlay"><h1>Interfaces, motion and real-time worlds. Fifteen years of interaction design for global brands, shipped with their engineering teams.</h1></div>
-      <p className="hero-wordmark">jay<sup>®</sup></p>
+      <p className="hero-wordmark">jay<sup aria-hidden="true">◦</sup></p>
       <p className="hero-submark">digital studio</p>
       <div className="hero-services"><span>Art direction</span><span>UI/UX design</span><span>Motion &amp; real-time 3D</span><span>AR / VR experiences</span></div>
     </section>

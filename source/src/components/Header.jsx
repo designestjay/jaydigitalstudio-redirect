@@ -13,7 +13,7 @@ export default function Header() {
   return (
     <>
       <header className="site-header">
-        <Link href="/#top" className="brand" onClick={() => setOpen(false)}>jay digital studio<sup>®</sup></Link>
+        <Link href="/#top" className="brand" onClick={() => setOpen(false)}>jay digital studio<sup aria-hidden="true">◦</sup></Link>
         <nav className="desktop-nav" aria-label="Main">
           {navItems.map(([label, href]) => <Link key={label} href={href}>{label}{label === 'Work' && <sup>11</sup>}</Link>)}
           <Link className="pill pill-dark" href="/#contact">Let&apos;s talk ↗</Link>
