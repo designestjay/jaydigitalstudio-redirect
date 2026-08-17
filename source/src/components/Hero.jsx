@@ -4,7 +4,6 @@ export default function Hero() {
   const heroRef = useRef(null);
   const videoRef = useRef(null);
   const [ready, setReady] = useState(false);
-  const [muted, setMuted] = useState(true);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -35,14 +34,6 @@ export default function Hero() {
     return () => { window.removeEventListener('scroll', onScroll); cancelAnimationFrame(frame); };
   }, []);
 
-  const toggleSound = () => {
-    const video = videoRef.current;
-    if (!video) return;
-    video.muted = !video.muted;
-    setMuted(video.muted);
-    video.play().catch(() => undefined);
-  };
-
   return (
     <section id="top" ref={heroRef} className="hero" aria-label="Jay Digital Studio">
       <video
@@ -60,7 +51,6 @@ export default function Hero() {
       <p className="hero-wordmark">jay<sup>®</sup></p>
       <p className="hero-submark">digital studio</p>
       <div className="hero-services"><span>Art direction</span><span>UI/UX design</span><span>Motion &amp; real-time 3D</span><span>AR / VR experiences</span></div>
-      <button className="hero-sound" type="button" onClick={toggleSound}>{muted ? 'Sound on' : 'Sound off'}</button>
     </section>
   );
 }

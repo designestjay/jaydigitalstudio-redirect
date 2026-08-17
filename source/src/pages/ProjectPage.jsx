@@ -48,7 +48,7 @@ function ProjectVideo({ project }) {
     return () => observer.disconnect();
   }, [project.slug]);
 
-  return <video ref={ref} className="case-video" loop muted playsInline controls preload="metadata" poster={project.thumb}><source src={project.mobileVideo || project.video} type="video/mp4" media="(max-width:1024px)" /><source src={project.video} type="video/mp4" /></video>;
+  return <video ref={ref} className="case-video" loop muted playsInline preload="metadata" poster={project.thumb} disablePictureInPicture><source src={project.mobileVideo || project.video} type="video/mp4" media="(max-width:1024px)" /><source src={project.video} type="video/mp4" /></video>;
 }
 
 export default function ProjectPage({ project }) {

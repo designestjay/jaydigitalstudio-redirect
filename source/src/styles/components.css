@@ -8,7 +8,6 @@
 .hero-wordmark sup { margin-left: .08em; font-size: .32em; vertical-align: top; letter-spacing: normal; }
 .hero-submark { margin: 6px 0 0 34%; font-size: clamp(30px, 4.6vw, 72px); font-weight: 600; letter-spacing: -.05em; line-height: 1; }
 .hero-services { position: absolute !important; top: clamp(120px, 22%, 240px); right: clamp(18px, 2.4vw, 38px); display: flex; flex-direction: column; gap: 11px; text-align: right; font-size: clamp(12px, 1.15vw, 17px); font-weight: 600; }
-.hero-sound { position: absolute !important; right: 24px; bottom: 24px; padding: 9px 13px; border: 1px solid rgb(255 255 255 / .45); border-radius: 999px; background: rgb(0 0 0 / .35); color: #fff; font: 11px 'JetBrains Mono', monospace; backdrop-filter: blur(8px); }
 .client-marquee { position: relative; z-index: 1; overflow: hidden; padding: 22px 0; border-bottom: 1px solid #ccc; background: #f2f2f0; }
 .client-track { display: flex; width: max-content; animation: marquee 42s linear infinite; }
 .client-row { display: flex; align-items: center; }

@@ -44,7 +44,6 @@
   .hero-submark { margin: 6px 0 0 31%; font-size: clamp(27px, 8.2vw, 38px); }
   .hero-services { top: 176px; right: 16px; gap: 8px; font-size: 12px; }
   .hero-overlay h1 { left: 18px; right: 18px; top: auto; bottom: 28px; max-width: none; font-size: clamp(21px, 6.4vw, 29px); }
-  .hero-sound { right: 14px; bottom: 112px; }
   .section { padding: 80px 14px; }
   .section-intro { grid-template-columns: minmax(0, 1fr); }
   .section-intro h2, .services-section > h2 { font-size: clamp(58px, 18vw, 86px); }
