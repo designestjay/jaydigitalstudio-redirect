@@ -1,4 +1,4 @@
-import React, { Suspense, createContext, lazy, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { Suspense, createContext, lazy, useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import HomePage from './pages/HomePage.jsx';
@@ -13,6 +13,17 @@ export const NavigationContext = createContext({ navigate: () => {} });
 function cleanPath(pathname) {
   const path = pathname.replace(/\/+$/, '') || '/';
   return path === '/index.html' ? '/' : path;
+}
+
+function resetScrollPosition() {
+  const root = document.documentElement;
+  const previousBehavior = root.style.scrollBehavior;
+  root.style.scrollBehavior = 'auto';
+  window.scrollTo(0, 0);
+  if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
+  root.scrollTop = 0;
+  document.body.scrollTop = 0;
+  window.requestAnimationFrame(() => { root.style.scrollBehavior = previousBehavior; });
 }
 
 export function Link({ href, children, onClick, ...props }) {
@@ -36,7 +47,7 @@ export default function App() {
     if (nextPath !== path) {
       window.history.pushState({}, '', `${nextPath}${hash ? `#${hash}` : ''}`);
       setPath(nextPath);
-      window.scrollTo(0, 0);
+      if (!hash) resetScrollPosition();
     } else if (hash) {
       document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth' });
     }
@@ -45,11 +56,15 @@ export default function App() {
   useEffect(() => {
     const onPopState = () => {
       setPath(cleanPath(window.location.pathname));
-      window.scrollTo(0, 0);
+      if (!window.location.hash) resetScrollPosition();
     };
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
   }, []);
+
+  useLayoutEffect(() => {
+    if (!window.location.hash) resetScrollPosition();
+  }, [path]);
 
   const route = useMemo(() => {
     const match = path.match(/^\/works\/([^/]+)$/);

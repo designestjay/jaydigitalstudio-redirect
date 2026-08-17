@@ -57,7 +57,6 @@ export default function ProjectPage({ project }) {
   const projectNumber = String(projects.findIndex((item) => item.slug === project.slug) + 1).padStart(3, '0');
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     const description = document.querySelector('meta[name="description"]');
     if (description) description.setAttribute('content', project.intro);
   }, [project]);
