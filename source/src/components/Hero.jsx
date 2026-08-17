@@ -44,8 +44,8 @@ export default function Hero() {
         onCanPlay={(event) => { setReady(true); event.currentTarget.play().catch(() => undefined); }}
         aria-hidden="true"
       >
-        <source src="/video/work-reel-mobile.mp4" type="video/mp4" media="(max-width:700px)" />
-        <source src="/video/work-reel-2024.mp4" type="video/mp4" />
+        <source src="/video/work-reel-jaydigitalstudio-mobile.mp4" type="video/mp4" media="(max-width:700px)" />
+        <source src="/video/work-reel-jaydigitalstudio-desktop.mp4" type="video/mp4" />
       </video>
       <div className="hero-overlay"><h1>Interfaces, motion and real-time worlds. Fifteen years of interaction design for global brands, shipped with their engineering teams.</h1></div>
       <p className="hero-wordmark">jay<sup>®</sup></p>
