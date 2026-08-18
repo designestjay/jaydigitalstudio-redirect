@@ -9,12 +9,13 @@ import QuoteSection from '../components/QuoteSection.jsx';
 import JournalSection from '../components/JournalSection.jsx';
 import FAQSection from '../components/FAQSection.jsx';
 import ContactSection from '../components/ContactSection.jsx';
+import { scrollToAnchor } from '../lib/scroll.js';
 
 export default function HomePage() {
   useEffect(() => {
     if (!window.location.hash) return;
     const id = window.location.hash.slice(1);
-    requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView());
+    requestAnimationFrame(() => scrollToAnchor(id, false));
   }, []);
 
   return <main><Hero /><ClientMarquee /><WorkSection /><StudioSection /><ServicesSection /><ProcessSection /><QuoteSection /><JournalSection /><FAQSection /><ContactSection /></main>;

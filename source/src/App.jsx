@@ -4,6 +4,8 @@ import Footer from './components/Footer.jsx';
 import HomePage from './pages/HomePage.jsx';
 import { projectBySlug } from './data/projects.js';
 import { useReveal } from './hooks/useReveal.js';
+import { useDesktopScrollSmoother } from './hooks/useDesktopScrollSmoother.js';
+import { scrollToAnchor, scrollToTop } from './lib/scroll.js';
 
 const ProjectPage = lazy(() => import('./pages/ProjectPage.jsx'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage.jsx'));
@@ -13,17 +15,6 @@ export const NavigationContext = createContext({ navigate: () => {} });
 function cleanPath(pathname) {
   const path = pathname.replace(/\/+$/, '') || '/';
   return path === '/index.html' ? '/' : path;
-}
-
-function resetScrollPosition() {
-  const root = document.documentElement;
-  const previousBehavior = root.style.scrollBehavior;
-  root.style.scrollBehavior = 'auto';
-  window.scrollTo(0, 0);
-  if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
-  root.scrollTop = 0;
-  document.body.scrollTop = 0;
-  window.requestAnimationFrame(() => { root.style.scrollBehavior = previousBehavior; });
 }
 
 export function Link({ href, children, onClick, ...props }) {
@@ -40,6 +31,7 @@ export function Link({ href, children, onClick, ...props }) {
 export default function App() {
   const [path, setPath] = useState(() => cleanPath(window.location.pathname));
   useReveal(path);
+  useDesktopScrollSmoother(path);
 
   const navigate = useCallback((href) => {
     const [pathname, hash = ''] = href.split('#');
@@ -47,23 +39,23 @@ export default function App() {
     if (nextPath !== path) {
       window.history.pushState({}, '', `${nextPath}${hash ? `#${hash}` : ''}`);
       setPath(nextPath);
-      if (!hash) resetScrollPosition();
+      if (!hash) scrollToTop();
     } else if (hash) {
-      document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth' });
+      scrollToAnchor(hash);
     }
   }, [path]);
 
   useEffect(() => {
     const onPopState = () => {
       setPath(cleanPath(window.location.pathname));
-      if (!window.location.hash) resetScrollPosition();
+      if (!window.location.hash) scrollToTop();
     };
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
   }, []);
 
   useLayoutEffect(() => {
-    if (!window.location.hash) resetScrollPosition();
+    if (!window.location.hash) scrollToTop();
   }, [path]);
 
   const route = useMemo(() => {
@@ -81,12 +73,17 @@ export default function App() {
   return (
     <NavigationContext.Provider value={{ navigate }}>
       <Header />
-      <Suspense fallback={<main className="route-loading" aria-label="Loading page" />}>
-        {route.type === 'home' && <HomePage />}
-        {route.type === 'project' && <ProjectPage project={route.project} />}
-        {route.type === 'not-found' && <NotFoundPage />}
-      </Suspense>
-      <Footer />
+      <div id="smooth-wrapper">
+        <div id="smooth-content">
+          <div className="site-header-spacer" aria-hidden="true" />
+          <Suspense fallback={<main className="route-loading" aria-label="Loading page" />}>
+            {route.type === 'home' && <HomePage />}
+            {route.type === 'project' && <ProjectPage project={route.project} />}
+            {route.type === 'not-found' && <NotFoundPage />}
+          </Suspense>
+          <Footer />
+        </div>
+      </div>
     </NavigationContext.Provider>
   );
 }
