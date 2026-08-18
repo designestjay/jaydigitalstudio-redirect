@@ -1,9 +1,10 @@
-.hero { --hero-shift: 0%; --reel-shift: 0%; position: relative; isolation: isolate; min-height: min(880px, calc(100svh - 94px)); margin: 6px 6px 0; scroll-margin-top: 6px; padding: clamp(30px, 5vw, 70px) clamp(18px, 2.4vw, 38px) clamp(200px, 22vw, 240px); overflow: hidden; border-radius: 28px; display: flex; flex-direction: column; background: #000; color: #fff; transform: translate3d(0, var(--hero-shift), 0); will-change: transform; }
-.hero-video { position: absolute; inset: -4% 0; z-index: 0; width: 100%; height: 108%; object-fit: cover; opacity: 0; pointer-events: none; filter: grayscale(.35) brightness(.7); transform: translate3d(0, var(--reel-shift), 0) scale(1.04); transition: opacity 550ms ease; }
+.hero { position: relative; isolation: isolate; min-height: min(880px, calc(100svh - 94px)); margin: 6px 6px 0; scroll-margin-top: 6px; padding: clamp(30px, 5vw, 70px) clamp(18px, 2.4vw, 38px) clamp(200px, 22vw, 240px); overflow: hidden; border-radius: 28px; display: flex; flex-direction: column; background: #000; color: #fff; }
+.hero-reel { position: absolute; inset: -4% 0; z-index: 0; width: 100%; height: 108%; pointer-events: none; will-change: transform; }
+.hero-video { width: 100%; height: 100%; object-fit: cover; opacity: 0; filter: grayscale(.35) brightness(.7); transform: scale(1.04); transition: opacity 550ms ease; }
 .hero-video.is-ready { opacity: 1; }
 .hero-overlay { position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgb(0 0 0 / .28), rgb(0 0 0 / .72)); }
 .hero-overlay h1 { position: absolute; left: 32px; top: min(68%, 600px); max-width: 640px; margin: 0; font-size: clamp(21px, 2.7vw, 40px); line-height: 1.12; letter-spacing: -.045em; font-weight: 500; }
-.hero > :not(.hero-video, .hero-overlay) { position: relative; z-index: 2; }
+.hero > :not(.hero-reel, .hero-overlay) { position: relative; z-index: 2; }
 .hero-wordmark { margin: 0; font-size: clamp(88px, 16.5vw, 262px); font-weight: 500; letter-spacing: -.09em; line-height: .76; }
 .hero-wordmark sup { margin-left: .08em; font-size: .32em; vertical-align: top; letter-spacing: normal; }
 .hero-submark { margin: 6px 0 0 34%; font-size: clamp(30px, 4.6vw, 72px); font-weight: 600; letter-spacing: -.05em; line-height: 1; }

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 export default function Hero() {
-  const heroRef = useRef(null);
   const videoRef = useRef(null);
   const [ready, setReady] = useState(false);
 
@@ -15,38 +14,20 @@ export default function Hero() {
     return () => window.clearTimeout(retry);
   }, []);
 
-  useEffect(() => {
-    if (window.matchMedia('(max-width: 820px), (prefers-reduced-motion: reduce)').matches) return undefined;
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      const hero = heroRef.current;
-      if (!hero) return;
-      const rect = hero.getBoundingClientRect();
-      if (rect.bottom < 0 || rect.top > window.innerHeight) return;
-      const progress = Math.min(1, Math.max(0, -rect.top / Math.max(1, rect.height)));
-      hero.style.setProperty('--hero-shift', `${progress * -18}%`);
-      hero.style.setProperty('--reel-shift', `${progress * 5}%`);
-    };
-    const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
-    update();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => { window.removeEventListener('scroll', onScroll); cancelAnimationFrame(frame); };
-  }, []);
-
   return (
-    <section id="top" ref={heroRef} className="hero" aria-label="Jay Digital Studio">
-      <video
-        ref={videoRef}
-        className={`hero-video ${ready ? 'is-ready' : ''}`}
-        autoPlay loop muted playsInline preload="auto"
-        onLoadedData={() => setReady(true)}
-        onCanPlay={(event) => { setReady(true); event.currentTarget.play().catch(() => undefined); }}
-        aria-hidden="true"
-      >
-        <source src="/video/work-reel-jaydigitalstudio-mobile.mp4" type="video/mp4" media="(max-width:700px)" />
-        <source src="/video/work-reel-jaydigitalstudio-desktop.mp4" type="video/mp4" />
-      </video>
+    <section id="top" className="hero" aria-label="Jay Digital Studio">
+      <div className="hero-reel" data-speed="auto" aria-hidden="true">
+        <video
+          ref={videoRef}
+          className={`hero-video ${ready ? 'is-ready' : ''}`}
+          autoPlay loop muted playsInline preload="auto"
+          onLoadedData={() => setReady(true)}
+          onCanPlay={(event) => { setReady(true); event.currentTarget.play().catch(() => undefined); }}
+        >
+          <source src="/video/work-reel-jaydigitalstudio-mobile.mp4" type="video/mp4" media="(max-width:700px)" />
+          <source src="/video/work-reel-jaydigitalstudio-desktop.mp4" type="video/mp4" />
+        </video>
+      </div>
       <div className="hero-overlay"><h1>Interfaces, motion and real-time worlds. Fifteen years of interaction design for global brands, shipped with their engineering teams.</h1></div>
       <p className="hero-wordmark">jay<sup aria-hidden="true">◦</sup></p>
       <p className="hero-submark">digital studio</p>

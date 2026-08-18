@@ -11,6 +11,30 @@ export function useDesktopScrollSmoother(routeKey) {
     let releaseSmoother = null;
     let mountObserver = null;
     let refreshFrame = 0;
+    const effectTriggers = new Map();
+
+    const effectElements = (root) => {
+      const elements = [];
+      if (root instanceof Element && root.matches('[data-speed], [data-lag]')) elements.push(root);
+      if (root.querySelectorAll) elements.push(...root.querySelectorAll('[data-speed], [data-lag]'));
+      return elements;
+    };
+
+    const registerEffects = (root) => {
+      const smoother = smootherRef.current;
+      if (!smoother) return;
+      effectElements(root).forEach((element) => {
+        if (effectTriggers.has(element)) return;
+        effectTriggers.set(element, smoother.effects(element) || []);
+      });
+    };
+
+    const unregisterEffects = (root) => {
+      effectElements(root).forEach((element) => {
+        effectTriggers.get(element)?.forEach((trigger) => trigger.kill());
+        effectTriggers.delete(element);
+      });
+    };
 
     const scheduleRefresh = () => {
       if (refreshFrame) return;
@@ -25,6 +49,7 @@ export function useDesktopScrollSmoother(routeKey) {
       refreshFrame = 0;
       mountObserver?.disconnect();
       mountObserver = null;
+      effectTriggers.clear();
       releaseSmoother?.();
       releaseSmoother = null;
       smootherRef.current?.kill();
@@ -64,7 +89,18 @@ export function useDesktopScrollSmoother(routeKey) {
       scrollTriggerRef.current = ScrollTrigger;
       releaseSmoother = setActiveScrollSmoother(smoother);
       document.documentElement.classList.add('has-scroll-smoother');
-      mountObserver = new MutationObserver(scheduleRefresh);
+      registerEffects(document);
+      mountObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          mutation.removedNodes.forEach((node) => {
+            if (node.nodeType === Node.ELEMENT_NODE) unregisterEffects(node);
+          });
+          mutation.addedNodes.forEach((node) => {
+            if (node.nodeType === Node.ELEMENT_NODE) registerEffects(node);
+          });
+        });
+        scheduleRefresh();
+      });
       mountObserver.observe(document.getElementById('smooth-content'), { childList: true, subtree: true });
       scheduleRefresh();
     };
