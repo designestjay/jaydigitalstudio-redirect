@@ -1,1 +1,0 @@
-import{a as e,i as t,t as n}from"./app-CPF2gKCJ.js";e();var r=t();function i(){return(0,r.jsxs)(`main`,{className:`not-found`,children:[(0,r.jsx)(`small`,{children:`404`}),(0,r.jsx)(`h1`,{children:`Page not found.`}),(0,r.jsx)(n,{className:`pill pill-dark`,href:`/`,children:`Back to the studio`})]})}export{i as default};

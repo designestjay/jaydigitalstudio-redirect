@@ -31,7 +31,17 @@ export function scrollToAnchor(id, smooth = true) {
 
   const target = document.getElementById(id);
   if (!target) return false;
-  if (activeSmoother) activeSmoother.scrollTo(target, smooth, 'top 74px');
-  else target.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto' });
+
+  const focusTarget = target.querySelector('.section-kicker') || target;
+  const headerHeight = document.querySelector('.site-header')?.getBoundingClientRect().height || 74;
+  const offset = headerHeight + 14;
+  const shouldSmooth = smooth && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (activeSmoother) {
+    activeSmoother.scrollTo(focusTarget, shouldSmooth, `top ${offset}px`);
+  } else {
+    const top = window.scrollY + focusTarget.getBoundingClientRect().top - offset;
+    window.scrollTo({ top: Math.max(0, top), left: 0, behavior: shouldSmooth ? 'smooth' : 'auto' });
+  }
   return true;
 }

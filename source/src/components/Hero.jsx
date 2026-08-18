@@ -15,8 +15,8 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="top" className="hero" aria-label="Jay Digital Studio">
-      <div className="hero-reel" data-speed="auto" aria-hidden="true">
+    <section id="top" className="hero" data-speed="0.78" aria-label="Jay Digital Studio">
+      <div className="hero-reel" aria-hidden="true">
         <video
           ref={videoRef}
           className={`hero-video ${ready ? 'is-ready' : ''}`}
