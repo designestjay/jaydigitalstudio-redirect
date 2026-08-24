@@ -15,7 +15,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="top" className="hero" data-speed="1.22" aria-label="Jay Digital Studio">
+    <section id="top" className="hero" data-speed="clamp(1.22)" aria-label="Jay Digital Studio">
       <div className="hero-reel" aria-hidden="true">
         <video
           ref={videoRef}
