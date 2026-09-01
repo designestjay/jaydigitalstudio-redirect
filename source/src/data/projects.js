@@ -4,6 +4,24 @@ const mobile = (src) => src.replace('/images/work/', '/images/mobile/work/').rep
 
 export const projects = [
   {
+    slug: 'volvo-safety-retail-ar', title: 'Volvo Cars Retail Safety AR', category: 'Augmented Reality', year: '2025',
+    thumb: thumb('volvo-safety-ar.jpg'), client: 'Volvo Cars', services: 'AR experience design, UX/UI, Unity development, analytics',
+    link: 'https://www.volvocars.com/intl/safety/',
+    intro: 'An iPad Pro augmented reality experience for Volvo Cars retail environments, turning safety technology into something visitors can explore on the real vehicle instead of watching on a flat screen. LiDAR-secured anchors keep scenarios aligned inside and outside four vehicle models, while integrated analytics reveal which features attract attention and how long visitors engage. The platform is designed to expand as more vehicles are added.',
+    video: '/video/volvo-safety-retail-ar.mp4', mobileVideo: '/video/mobile/volvo-safety-retail-ar.mp4',
+    gallery: [
+      [1.78, 'volvo-safety-ar-hero.jpg', 'Visitor exploring Volvo safety structures in augmented reality'],
+      [1.78, 'volvo-safety-ar-1.jpg', 'Volvo retail safety AR experience on iPad Pro'],
+      [1.78, 'volvo-safety-ar-2.jpg', 'Young visitors exploring Volvo safety features with the AR app'],
+      [1.78, 'volvo-safety-ar-3.jpg', 'Child safety feature aligned with a Volvo vehicle'],
+      [.75, 'volvo-safety-ar-4.jpg', 'Volvo Safety For Life experience welcome screen'],
+      [.75, 'volvo-safety-ar-5.jpg', 'Driver understanding safety feature visualization'],
+      [1.78, 'volvo-safety-ar-6.jpg', 'Vehicle selection interface for the Volvo retail safety experience'],
+      [1.78, 'volvo-safety-ar-7.jpg', 'Safety feature menu and icon system'],
+      [1.78, 'volvo-safety-ar-8.jpg', 'LiDAR anchor setup and visitor journey flow']
+    ]
+  },
+  {
     slug: 'world-of-volvo', title: 'World of Volvo', category: 'Interactive Media', year: '2024',
     thumb: thumb('wov.jpg'), client: 'World of Volvo', services: '3D visualization, interaction design, development',
     link: 'https://www.worldofvolvo.com/sv/utstallning/',

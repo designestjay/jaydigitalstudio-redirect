@@ -6,7 +6,7 @@ import SectionHeader from './SectionHeader.jsx';
 export default function WorkSection() {
   return (
     <section id="work" className="section work-section">
-      <SectionHeader left="Selected work" center="(2020—25©)" right="(11)" />
+      <SectionHeader left="Selected work" center="(2020—25©)" right={`(${projects.length})`} />
       <div className="section-intro"><h2>Work.</h2><p>Interactive media, automotive HMI, augmented reality and product design — delivered with global brands and their engineering teams.</p></div>
       <div className="work-grid">
         {projects.map((project, index) => (
