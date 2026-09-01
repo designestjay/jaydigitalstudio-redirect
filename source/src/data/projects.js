@@ -4,7 +4,7 @@ const mobile = (src) => src.replace('/images/work/', '/images/mobile/work/').rep
 
 export const projects = [
   {
-    slug: 'volvo-safety-retail-ar', title: 'Volvo Cars Retail Safety AR', category: 'Augmented Reality', year: '2025',
+    slug: 'volvo-safety-retail-ar', title: 'Volvo Cars Retail Safety AR', category: 'Mixed Reality', year: '2025',
     thumb: thumb('volvo-safety-ar.jpg'), client: 'Volvo Cars', services: 'AR experience design, UX/UI, Unity development, analytics',
     link: 'https://www.volvocars.com/intl/safety/',
     intro: 'An iPad Pro augmented reality experience for Volvo Cars retail environments, turning safety technology into something visitors can explore on the real vehicle instead of watching on a flat screen. LiDAR-secured anchors keep scenarios aligned inside and outside four vehicle models, while integrated analytics reveal which features attract attention and how long visitors engage. The platform is designed to expand as more vehicles are added.',
