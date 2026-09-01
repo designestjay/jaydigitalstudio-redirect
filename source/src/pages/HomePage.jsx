@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import Hero from '../components/Hero.jsx';
 import ClientMarquee from '../components/ClientMarquee.jsx';
 import WorkSection from '../components/WorkSection.jsx';
@@ -9,9 +9,16 @@ import QuoteSection from '../components/QuoteSection.jsx';
 import JournalSection from '../components/JournalSection.jsx';
 import FAQSection from '../components/FAQSection.jsx';
 import ContactSection from '../components/ContactSection.jsx';
-import { scrollToAnchor } from '../lib/scroll.js';
+import { scrollToAnchor, scrollToTop } from '../lib/scroll.js';
 
 export default function HomePage() {
+  useLayoutEffect(() => {
+    if (window.location.hash !== '#top') return undefined;
+    scrollToTop();
+    const frame = window.requestAnimationFrame(scrollToTop);
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
   useEffect(() => {
     if (!window.location.hash) return;
     const id = window.location.hash.slice(1);

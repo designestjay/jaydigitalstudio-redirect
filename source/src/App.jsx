@@ -39,7 +39,7 @@ export default function App() {
     if (nextPath !== path) {
       window.history.pushState({}, '', `${nextPath}${hash ? `#${hash}` : ''}`);
       setPath(nextPath);
-      if (!hash) scrollToTop();
+      if (!hash || hash === 'top') scrollToTop();
     } else if (hash) {
       scrollToAnchor(hash);
     }
@@ -55,7 +55,7 @@ export default function App() {
   }, []);
 
   useLayoutEffect(() => {
-    if (!window.location.hash) scrollToTop();
+    if (!window.location.hash || window.location.hash === '#top') scrollToTop();
   }, [path]);
 
   const route = useMemo(() => {

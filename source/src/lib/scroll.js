@@ -9,8 +9,8 @@ export function setActiveScrollSmoother(smoother) {
 
 export function scrollToTop() {
   if (activeSmoother) {
+    activeSmoother.scrollTo(0, false);
     activeSmoother.scrollTop(0);
-    return;
   }
 
   const root = document.documentElement;

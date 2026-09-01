@@ -1,6 +1,7 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import { Link } from '../App.jsx';
 import { projectNeighbours, projects } from '../data/projects.js';
+import { scrollToTop } from '../lib/scroll.js';
 
 function buildBlocks(project) {
   const blocks = [];
@@ -55,6 +56,12 @@ export default function ProjectPage({ project }) {
   const blocks = useMemo(() => buildBlocks(project), [project]);
   const neighbours = projectNeighbours(project.slug);
   const projectNumber = String(projects.findIndex((item) => item.slug === project.slug) + 1).padStart(3, '0');
+
+  useLayoutEffect(() => {
+    scrollToTop();
+    const frame = window.requestAnimationFrame(scrollToTop);
+    return () => window.cancelAnimationFrame(frame);
+  }, [project.slug]);
 
   useEffect(() => {
     const description = document.querySelector('meta[name="description"]');
