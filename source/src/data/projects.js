@@ -15,10 +15,7 @@ export const projects = [
       [1.78, 'volvo-safety-ar-2.jpg', 'Young visitors exploring Volvo safety features with the AR app'],
       [1.78, 'volvo-safety-ar-3.jpg', 'Child safety feature aligned with a Volvo vehicle'],
       [.75, 'volvo-safety-ar-4.jpg', 'Volvo Safety For Life experience welcome screen'],
-      [.75, 'volvo-safety-ar-5.jpg', 'Driver understanding safety feature visualization'],
-      [1.78, 'volvo-safety-ar-6.jpg', 'Vehicle selection interface for the Volvo retail safety experience'],
-      [1.78, 'volvo-safety-ar-7.jpg', 'Safety feature menu and icon system'],
-      [1.78, 'volvo-safety-ar-8.jpg', 'LiDAR anchor setup and visitor journey flow']
+      [.75, 'volvo-safety-ar-5.jpg', 'Driver understanding safety feature visualization']
     ]
   },
   {
