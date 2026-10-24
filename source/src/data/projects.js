@@ -432,19 +432,11 @@ export const projects = [
 
 export const projectBySlug = Object.fromEntries(projects.map((project) => [project.slug, project]));
 
-/** More Works cycle matches iamjaydesign (excludes volvo-safety-only page). */
-const moreWorksCycle = projects.filter((project) => project.slug !== 'volvo-safety-retail-ar');
-
+/** Circular More Works neighbours — array order places retail AR between geely-motors and world-of-volvo. */
 export function projectNeighbours(slug) {
-  if (slug === 'volvo-safety-retail-ar') {
-    return {
-      previous: projectBySlug['geely-motors'],
-      next: projectBySlug['world-of-volvo']
-    };
-  }
-  const index = Math.max(0, moreWorksCycle.findIndex((project) => project.slug === slug));
+  const index = Math.max(0, projects.findIndex((project) => project.slug === slug));
   return {
-    previous: moreWorksCycle[(index - 1 + moreWorksCycle.length) % moreWorksCycle.length],
-    next: moreWorksCycle[(index + 1) % moreWorksCycle.length]
+    previous: projects[(index - 1 + projects.length) % projects.length],
+    next: projects[(index + 1) % projects.length]
   };
 }
