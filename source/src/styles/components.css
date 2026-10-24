@@ -52,14 +52,98 @@
 .process-card { padding-top: 12px; border-top: 1px solid #999; display: flex; flex-direction: column; }
 .process-card > small { font: 12px 'JetBrains Mono', monospace; color: #555; }
 .process-card h3 { min-height: 3em; max-width: 230px; margin: 0; font-size: 20px; line-height: 1.25; }
-.process-graphic { width: 100%; aspect-ratio: 1; margin: 40px 0 20px; padding: 16%; border-radius: 18px; background: #fff; }
-.process-lines { display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 20% 14%; }
-.process-lines i { height: 10px; border-radius: 99px; background: #dcdcd6; }
-.process-lines i:nth-child(2) { width: 64%; }.process-lines i:nth-child(3) { width: 42%; background: #111; }.process-lines i:nth-child(4) { width: 74%; }
-.process-grid.process-graphic, .process-grid .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 9px; }
-.process-grid i { border: 1.5px solid #dcdcd6; border-radius: 4px; }.process-grid i:nth-child(5) { background: #111; border-color: #111; }
-.process-rings { position: relative; }.process-rings i { position: absolute; inset: 12%; border: 1.5px solid #dcdcd6; border-radius: 50%; }.process-rings i:nth-child(2) { inset: 28%; }.process-rings i:nth-child(3) { inset: 42%; }.process-rings i:nth-child(4) { inset: 48%; background: #111; border-color: #111; }
-.process-blocks { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }.process-blocks i { border-radius: 8px; background: #dcdcd6; }.process-blocks i:nth-child(3) { background: #111; }
+.process-graphic { width: 100%; aspect-ratio: 1; margin: 40px 0 20px; padding: 12%; border-radius: 18px; background: #fff; overflow: hidden; }
+.process-svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.process-stroke { stroke-linecap: round; stroke-width: 3.5; fill: none; }
+.process-stroke-muted { stroke: #d0d0c8; }
+.process-stroke-accent { stroke: #111; stroke-width: 4; }
+
+/* Draw setup: pathLength + dasharray/offset set as SVG attrs; CSS animates offset to 0 */
+.process-cell { fill: transparent; stroke: #d0d0c8; stroke-width: 1.75; opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(.72); }
+.process-cell-accent { fill: #111; stroke: #111; }
+.process-ring-core { fill: #111; opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(.4); }
+.process-block { fill: #dcdcd6; opacity: 0; transform-box: fill-box; transform-origin: center; transform: translateY(8px) scale(.92); }
+.process-block-accent { fill: #111; }
+
+/* Enter: line-draw staggered */
+.process-card.is-drawn .process-stroke.is-path:not(.process-line-accent) { animation: process-draw 1.05s cubic-bezier(.22, 1, .36, 1) forwards; }
+.process-card.is-drawn .process-stroke:nth-child(1) { animation-delay: .05s; }
+.process-card.is-drawn .process-stroke:nth-child(2) { animation-delay: .18s; }
+.process-card.is-drawn .process-stroke:nth-child(4) { animation-delay: .46s; }
+.process-card.is-drawn .process-line-accent.is-path {
+  animation:
+    process-draw 1.05s cubic-bezier(.22, 1, .36, 1) .32s forwards,
+    process-line-breathe 3.6s ease-in-out 1.4s infinite;
+}
+
+/* Enter: grid cascade + center pulse */
+.process-card.is-drawn .process-cell { animation: process-cell-in .55s cubic-bezier(.22, 1, .36, 1) forwards; }
+.process-card.is-drawn .process-cell:nth-child(1) { animation-delay: .04s; }
+.process-card.is-drawn .process-cell:nth-child(2) { animation-delay: .1s; }
+.process-card.is-drawn .process-cell:nth-child(3) { animation-delay: .16s; }
+.process-card.is-drawn .process-cell:nth-child(4) { animation-delay: .12s; }
+.process-card.is-drawn .process-cell:nth-child(5) { animation-delay: .22s; }
+.process-card.is-drawn .process-cell:nth-child(6) { animation-delay: .28s; }
+.process-card.is-drawn .process-cell:nth-child(7) { animation-delay: .2s; }
+.process-card.is-drawn .process-cell:nth-child(8) { animation-delay: .3s; }
+.process-card.is-drawn .process-cell:nth-child(9) { animation-delay: .36s; }
+.process-card.is-drawn .process-cell-accent { animation: process-cell-in .55s cubic-bezier(.22, 1, .36, 1) .22s forwards, process-pulse 2.8s ease-in-out 1s infinite; }
+
+/* Enter: rings draw + slow spin */
+.process-card.is-drawn .process-ring-outer { animation: process-draw 1.2s cubic-bezier(.22, 1, .36, 1) .05s forwards; }
+.process-card.is-drawn .process-ring-mid { animation: process-draw 1s cubic-bezier(.22, 1, .36, 1) .22s forwards; }
+.process-card.is-drawn .process-ring-inner { animation: process-draw .85s cubic-bezier(.22, 1, .36, 1) .38s forwards; }
+.process-card.is-drawn .process-ring-core { animation: process-core-in .45s cubic-bezier(.22, 1, .36, 1) .55s forwards; }
+.process-card.is-drawn .process-rings-spin { animation: process-spin 12s linear 1.2s infinite; transform-origin: 0 0; }
+
+/* Enter: blocks settle + accent drift */
+.process-card.is-drawn .process-block { animation: process-block-in .55s cubic-bezier(.22, 1, .36, 1) forwards; }
+.process-card.is-drawn .process-block:nth-child(1) { animation-delay: .08s; }
+.process-card.is-drawn .process-block:nth-child(2) { animation-delay: .18s; }
+.process-card.is-drawn .process-block:nth-child(4) { animation-delay: .28s; }
+.process-card.is-drawn .process-block-accent { animation: process-block-in .55s cubic-bezier(.22, 1, .36, 1) .22s forwards, process-drift 3.4s ease-in-out .9s infinite; }
+
+/* Hover accents (fine pointer only) */
+@media (hover: hover) and (pointer: fine) {
+  .process-card:hover .process-line-accent { stroke: #111; filter: drop-shadow(0 0 0 #c8ff36); }
+  .process-card:hover .process-cell-accent { transform: scale(1.08); }
+  .process-card.is-drawn:hover .process-cell-accent { animation-play-state: paused; }
+  .process-card:hover .process-rings-spin { animation-duration: 10s; }
+  .process-card:hover .process-block-accent { transform: translateY(-3px); }
+  .process-card.is-drawn:hover .process-block-accent { animation-play-state: paused; }
+  .process-graphic { transition: background .35s ease; }
+  .process-card:hover .process-graphic { background: #f7f7f3; }
+}
+
+@keyframes process-draw { to { stroke-dashoffset: 0; } }
+@keyframes process-line-breathe {
+  0%, 100% { stroke-width: 4; opacity: 1; }
+  50% { stroke-width: 5.5; opacity: .75; }
+}
+@keyframes process-cell-in { to { opacity: 1; transform: scale(1); } }
+@keyframes process-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+@keyframes process-core-in { to { opacity: 1; transform: scale(1); } }
+@keyframes process-spin { to { transform: rotate(360deg); } }
+@keyframes process-block-in { to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes process-drift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .process-card .process-stroke.is-path,
+  .process-card .process-ring.is-path { stroke-dashoffset: 0; animation: none !important; }
+  .process-card .process-cell,
+  .process-card .process-ring-core,
+  .process-card .process-block { opacity: 1; transform: none; animation: none !important; }
+  .process-card .process-rings-spin,
+  .process-card .process-line-accent,
+  .process-card .process-cell-accent,
+  .process-card .process-block-accent { animation: none !important; }
+}
 .quote-section { margin: 0 6px; padding: clamp(60px, 8vw, 120px) clamp(20px, 5vw, 76px); border-radius: 28px; background: #c8ff36; }
 .quote-section blockquote { max-width: 1200px; margin: 0 0 34px; font-size: clamp(38px, 6vw, 92px); line-height: .98; letter-spacing: -.065em; }
 .quote-section > div { display: flex; justify-content: space-between; gap: 20px; font: 12px 'JetBrains Mono', monospace; }
