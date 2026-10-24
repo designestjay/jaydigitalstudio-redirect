@@ -52,7 +52,7 @@ export const projects = [
     link: 'https://www.worldofvolvo.com/sv/utstallning/',
     linkLabel: 'View project',
     intro: "A captivating interactive experience for the Volvo Experience Center's Diver Station. As UI/UX Designer and Unity Developer, I created an immersive environment that reveals Volvo's innovations and heritage in depth, enhancing the exhibition's informative layer for visitors eager to explore the brand's technological contributions.",
-    video: 'https://iamjaydesign.com/images/assets/WOV/DIVER-Station.mp4',
+    video: '/video/world-of-volvo.mp4',
     mobileVideo: '/video/mobile/world-of-volvo.mp4',
     galleryGap: 'tight',
     layout: [
@@ -86,7 +86,7 @@ export const projects = [
     link: 'https://spelaroll.nu/',
     linkLabel: 'View campaign',
     intro: 'An innovative digital FIFA derby match between IFK and Häcken football clubs in Gothenburg, Sweden. We scanned actual players using LIDAR and photogrammetry, created authentic uniforms with 3D garment software, and utilized Unreal\'s LiveLink face capture technology to bring the players to life with realistic expressions and movements.',
-    video: 'https://iamjaydesign.com/images/assets/LFDigitalDerby/IFK-16-9-web.mp4',
+    video: '/video/lf-digital-derby.mp4',
     mobileVideo: '/video/mobile/lf-digital-derby.mp4',
     galleryGap: 'tight',
     layout: [
@@ -114,7 +114,7 @@ export const projects = [
     link: 'https://apps.apple.com/se/app/volvo-cars-ar/id6448719010',
     linkLabel: 'View project',
     intro: 'This is a mobile augmented reality experience that allows users to view and explore Volvo EX90, EX30 and ES90 in a new and engaging way. Users can place the AR models on any surface, view them from all angles, and capture screenshots of the cars in their real environment.',
-    video: 'https://iamjaydesign.com/images/assets/Volvo%20Cars%20AR/Volvo%20AR-White.mp4',
+    video: '/video/volvo-cars-ar.mp4',
     mobileVideo: '/video/mobile/volvo-cars-ar.mp4',
     galleryGap: 'tight',
     layout: [
@@ -256,7 +256,7 @@ export const projects = [
     link: 'https://www.gordonmurrayautomotive.com/automotive/t50',
     linkLabel: 'View project',
     intro: "A sophisticated automotive HMI design project for Gordon Murray Design, the legendary automotive engineering company. The project focused on creating next-generation interfaces that enhance the driving experience while maintaining the brand's iconic design language.",
-    video: 'https://iamjaydesign.com/images/assets/GMA/Videos/T.50%20Continued%20Development%20of%20XP2%20&%20XP3.mp4',
+    video: '/video/gordon-murray.mp4',
     mobileVideo: '/video/mobile/gordon-murray.mp4',
     galleryGap: 'loose',
     layout: [
@@ -291,7 +291,7 @@ export const projects = [
     link: null,
     linkLabel: null,
     intro: "A cutting-edge interactive application designed for ESAB, a global leader in welding and cutting equipment. The application provides an immersive experience showcasing ESAB's innovative products and technologies, allowing users to explore their features and benefits in detail.",
-    video: 'https://iamjaydesign.com/images/assets/ESAB/ESAB-Interactive%20App.mp4',
+    video: '/video/esab.mp4',
     mobileVideo: '/video/mobile/esab.mp4',
     galleryGap: 'tight',
     layout: [
@@ -318,7 +318,7 @@ export const projects = [
     link: 'https://www.magna.com/',
     linkLabel: 'View project',
     intro: "A sophisticated automotive HMI solution for Magna, one of the world's leading automotive suppliers. This project focuses on creating an advanced cockpit experience that integrates cutting-edge technology with human-centered design principles, resulting in an intuitive and engaging interface for next-generation vehicles.",
-    video: 'https://iamjaydesign.com/images/assets/Magna/Magna-CP-rev-12thDec.mp4',
+    video: '/video/magna.mp4',
     mobileVideo: '/video/mobile/magna.mp4',
     galleryGap: 'tight',
     layout: [
@@ -352,7 +352,7 @@ export const projects = [
     link: null,
     linkLabel: null,
     intro: "An innovative augmented reality experience developed for Volvo Group's Ocean Race exhibition. This interactive AR application allows visitors to explore Volvo's maritime technologies and contributions to sustainable ocean racing through immersive digital content overlaid on physical exhibits, creating an engaging and educational experience.",
-    video: 'https://iamjaydesign.com/images/assets/Volvo%20Group%20AR/Volvo%20Group%20Ocean%20Race%20Interactive%20Play-Product%20Video.mp4',
+    video: '/video/volvo-group-ar.mp4',
     mobileVideo: '/video/mobile/volvo-group-ar.mp4',
     galleryGap: 'tight',
     layout: [
@@ -393,7 +393,7 @@ export const projects = [
     link: null,
     linkLabel: null,
     intro: 'An innovative automotive HMI design for Geely Motors that reimagines the in-car user experience. This project delivers a seamless integration of cutting-edge technology and intuitive design, creating a user-centric interface that enhances the driving experience while ensuring safety and accessibility.',
-    video: 'https://iamjaydesign.com/images/assets/Geely%20Motors/Geely-Liv%20Demo%20Video-Optimized.mp4',
+    video: '/video/geely-motors.mp4',
     mobileVideo: '/video/mobile/geely-motors.mp4',
     galleryGap: 'tight',
     layout: [
